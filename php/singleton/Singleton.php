@@ -19,16 +19,22 @@ class Singleton
 {
     /**
      * メンバー変数
+     *
+     * @var string
      */
     private $name;
 
     /**
      * インスタンスを保持する変数
+     *
+     * @var Singleton
      */
     private static $instance;
 
     /**
      * コンストラクタ
+     *
+     * @return void
      */
     private function __construct()
     {
@@ -38,7 +44,8 @@ class Singleton
 
     /**
      * インスタンスを返す
-     * @return Singletonインスタンス
+     *
+     * @return Singleton
      */
     public static function getInstance() {
         if (!isset(self::$instance)) {
@@ -50,6 +57,7 @@ class Singleton
 
     /**
      * 名前を返す
+     *
      * @return string
      */
     public function getName() {
@@ -58,6 +66,7 @@ class Singleton
 
     /**
      * このインスタンスの複製を許可しないようにする
+     *
      * @throws RuntimeException
      */
     public final function __clone() {
