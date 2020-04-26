@@ -61,7 +61,7 @@ class Singleton
      * @throws RuntimeException
      */
     public final function __clone() {
-        throw new RuntimeException (get_class($this) . 'の複製はできないよ !') . PHP_EOL;
+        throw new RuntimeException ('Clone is not allowed against ' . get_class($this));
     }
 
 }
