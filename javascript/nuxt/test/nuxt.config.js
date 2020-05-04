@@ -44,7 +44,11 @@ export default {
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    '@nuxtjs/style-resources',
   ],
+  styleResources: {
+    stylus: './assets/stylus/set.styl'
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

@@ -2,7 +2,7 @@
   .container
     div
       logo
-      h1.title やい
+      h1.title.yai やい
       h2.subtitle My Good Yai Project ft. やい
       .links
         a.button--green(href="https://nuxtjs.org/" target="_blank") Documentation
@@ -20,6 +20,7 @@ export default {
 </script>
 
 <style lang="stylus">
+
 .container
   margin 0 auto
   min-height 100vh
@@ -34,8 +35,9 @@ export default {
   display block
   font-weight 300
   font-size 100px
-  color #35495e
+  // color #35495e
   letter-spacing 1px
+  yai(150)
 
 .subtitle
   font-weight 300
@@ -46,5 +48,4 @@ export default {
 
 .links
   padding-top 15px
-
 </style>
