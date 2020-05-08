@@ -2,7 +2,8 @@
   #app
     img(alt="Vue logo" src="./assets/logo.png")
     HelloWorld(msg="Welcome to Your Vue.js App")
-    p {{ name }}
+    //- p(v-bind:id='id') {{ name }}
+    p(:id='id') {{ name }}
     div(v-html="htmlTag")
 </template>
 
@@ -17,7 +18,8 @@ export default {
   data: function () {
     return {
       name: 'やい',
-      htmlTag: '<strong>やい！</strong>'
+      htmlTag: '<strong>やい！</strong>',
+      id: 'yai'
     }
   }
 }
@@ -31,4 +33,8 @@ export default {
   text-align center
   color #2c3e50
   margin-top 60px
+#yai
+  color pink
+  font-size 80px
+  font-weight bold
 </style>
