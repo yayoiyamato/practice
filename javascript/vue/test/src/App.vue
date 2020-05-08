@@ -3,6 +3,7 @@
     img(alt="Vue logo" src="./assets/logo.png")
     HelloWorld(msg="Welcome to Your Vue.js App")
     p {{ name }}
+    div(v-html="htmlTag")
 </template>
 
 <script>
@@ -15,7 +16,8 @@ export default {
   },
   data: function () {
     return {
-      name: 'やい'
+      name: 'やい',
+      htmlTag: '<strong>やい！</strong>'
     }
   }
 }
