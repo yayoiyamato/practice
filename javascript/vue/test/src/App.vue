@@ -19,6 +19,37 @@
     p 式の値の真偽に応じて、要素の CSS プロパティ display をトグルし、表示／非表示を切り替える
     p(v-show='isShow') isShowがtrueのとき表示
     button(@click='isShow = !isShow') true / false 切替
+    hr
+    h2 v-if, v-else, v-else-if
+    p 初期表示において条件が最初に true になったときに描画（false の場合描画しない）
+    p v-show：初期条件に関わらず常に描画され、要素を表示／非表示をCSSベースで切り替える
+    p 
+      strong v-for と一緒に使用した場合は、v-forが優先される
+    p
+      span(v-if="color === 'green'") colorが「green」のとき表示
+      span(v-else-if="color === 'yellow'") colorが「yellow」のとき表示
+      span(v-else) colorがその他のとき表示
+      span （color = {{ color }}）
+    button(@click='color = colors[ Math.floor( Math.random() * 3 ) + 1 ]') color の値を変更
+    hr
+    h2 v-for
+    p 要素またはテンプレートブロックをループして描画する
+    p 
+      strong 配列の場合：
+      br 
+      | v-for="item in items"
+      br 
+      | v-for="(item, index) in items"
+    p 
+      srtong オブジェクトの場合：
+      br
+      | v-for="(val, key) in object"
+      br
+      | v-for="(val, name, index) in object"
+    ul
+      li(v-for='(val, name, index) in monster') {{ index }}：{{ name }} = {{ val }}
+    hr
+
 </template>
 
 <script>
@@ -31,6 +62,21 @@ export default {
       name: 'やい',
       tag: '<span style="color:pink">pタグのinnerHTMLを文字色pinkのspanタグに置き換え</span>',
       isShow: true,
+      color: 'green',
+      colors: [
+        'green',
+        'yellow',
+        'pink',
+        'blue'
+      ],
+      monster: {
+        name: 'mike',
+        color: 'lightgreen',
+        friends: [
+          'sally',
+          'boo'
+        ]
+      }
     }
   }
 }
@@ -44,4 +90,8 @@ export default {
   text-align center
   color #2c3e50
   margin-top 60px
+  ul
+    padding 0
+    li
+      list-style none
 </style>
