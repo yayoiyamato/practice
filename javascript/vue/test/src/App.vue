@@ -1,10 +1,13 @@
 <template lang="pug">
   #app
     img(alt="Vue logo" src="./assets/logo.png")
-    HelloWorld(msg="Welcome to Your Vue.js App")
-    //- p(v-bind:id='id') {{ name }}
-    p(:id='id') {{ name }}
-    div(v-html="htmlTag")
+    h2 ｛｛ ｝｝
+    p DOM要素の内側をテキストノードとして部分的に書き換える
+    p 名前： {{ name }}
+    hr
+    h2= 'v-text'
+    p DOM要素の内側をテキストノードとして全部書き換える
+    p(v-text="name")
 </template>
 
 <script>
@@ -18,8 +21,6 @@ export default {
   data: function () {
     return {
       name: 'やい',
-      htmlTag: '<strong>やい！</strong>',
-      id: 'yai'
     }
   }
 }
@@ -33,8 +34,4 @@ export default {
   text-align center
   color #2c3e50
   margin-top 60px
-#yai
-  color pink
-  font-size 80px
-  font-weight bold
 </style>
