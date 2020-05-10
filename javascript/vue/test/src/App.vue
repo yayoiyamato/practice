@@ -8,19 +8,29 @@
     h2= 'v-text'
     p DOM要素の内側をテキストノードとして全部書き換える
     p(v-text="name")
+    hr
+    h2 v-html
+    p 要素の innerHTML を書き換える
+    p ※ HTML を Web サイト上で動的に描画するセキュリティ上危険なため注意
+    p ※ 単一ファイルコンポーネントでは、scoped スタイルは v-html 内のコンテンツには適用されない
+    p(v-html='tag')
+    hr
+    h2 v-show
+    p 式の値の真偽に応じて、要素の CSS プロパティ display をトグルし、表示／非表示を切り替える
+    p(v-show='isShow') isShowがtrueのとき表示
+    button(@click='isShow = !isShow') true / false 切替
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
   components: {
-    HelloWorld
   },
   data: function () {
     return {
       name: 'やい',
+      tag: '<span style="color:pink">pタグのinnerHTMLを文字色pinkのspanタグに置き換え</span>',
+      isShow: true,
     }
   }
 }
