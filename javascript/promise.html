@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Promiseの練習</title>
+</head>
+<body>
+<h1>Promiseの練習</h1>
+   
+</body>
+<script>
+
+/*
+ *  Promise の練習
+ */
+
+'use strict';
+
+function myFunc(arg) {
+   new Promise((resolve, reject) => {
+
+      // 非同期で行う何らかの処理
+
+      // 処理が上手くいった場合
+         resolve('success!')
+
+      // 処理が上手くいかなかった場合
+      reject('failed')
+   });
+};
+
+
+
+console.log('start!');
+</script>
+
+</html>
