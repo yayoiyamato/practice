@@ -1,5 +1,13 @@
 'use strict';
 
+/*
+ *  TODO: 表示件数が○件以上のとき親要素にクラス付与する
+ *  TODO: ↓の方法以外で綺麗にHTMLかく方法調べる
+ *        - templateをjs側に直書きしない
+ *        - 別のtemplateファイル読み込まない
+ *        - HTML内で<script type="text/template">タグ使わない
+ */
+
 // View
 const Contact = Backbone.Marionette.ItemView.extend({
     el: '#contact-region',
