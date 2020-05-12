@@ -6,7 +6,19 @@
     <title>backbone.marionetteの練習</title>
 </head>
 <body>
+
     
+    <div id="contact-region"></div>
+ 
+    <script type="text/template" id="contact-template">
+    <dl>
+        <dt>Name</dt>
+        <dd><%- name %></dd>
+        <dt>Age</dt>
+        <dd><%- age %></dd>
+    </dl>
+    </script>
+
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
