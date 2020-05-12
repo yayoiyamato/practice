@@ -12,8 +12,26 @@ const Contact = Backbone.Marionette.ItemView.extend({
     template: '#contact-template',
     initialize: () => {
         console.log('initializeを実行')
-        this.render()
     },
+    // serializeData: () => {
+    //     console.log('serializeDataを実行')
+    //     return {
+    //         monsters: [
+    //             {
+    //                 'name' : 'Sally',
+    //                 'age' : 50
+    //             },
+    //             {
+    //                 'name' : 'Mike',
+    //                 'age' : 60
+    //             },
+    //             {
+    //                 'name' : 'Boo',
+    //                 'age' : 1
+    //             }
+    //         ]
+    //     }
+    // },
     onBeforeShow: () => {
         console.log('onBeforeShowを実行')
     },
