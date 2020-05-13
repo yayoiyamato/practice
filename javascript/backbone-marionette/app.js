@@ -10,61 +10,52 @@
  */
 
 // View
-const Contact = Backbone.Marionette.ItemView.extend({
-    el: '#contact-region',
-    ui: {
-        contactRegion: '#contact-region'
+const MyItemView = Backbone.Marionette.ItemView.extend({
+    initialize: () => {
+        console.log('MyItemViewのinitializeを実行')
+    },
+    onBeforeShow: () => {
+        console.log('MyItemViewのonBeforeShowを実行')
+    },
+    // Region.showで実行される
+    onShow: () => {
+        console.log('MyItemViewのonShowを実行')
+    },
+    // renderで実行される
+    onRender: () => {
+        console.log('MyItemViewのonRenderを実行')
+    }
+});
+
+// CollectionView
+const MyCollectionView = Backbone.Marionette.CollectionView.extend({
+    initialize: () => {
+        console.log('MyCollectionViewのinitializeを実行')
     },
     // テンプレート内でChildViewを設置する要素のセレクターを登録
     regions: {
     },
-    template: '#contact-template',
-    initialize: () => {
-        console.log('initializeを実行')
-    },
-    // serializeData: () => {
-    //     console.log('serializeDataを実行')
-    //     return {
-    //         monsters: [
-    //             {
-    //                 'name' : 'Sally',
-    //                 'age' : 50
-    //             },
-    //             {
-    //                 'name' : 'Mike',
-    //                 'age' : 60
-    //             },
-    //             {
-    //                 'name' : 'Boo',
-    //                 'age' : 1
-    //             }
-    //         ]
-    //     }
-    // },
-    onBeforeShow: () => {
-        console.log('onBeforeShowを実行')
-    },
-    // Region.showで実行される
-    onShow: () => {
-        console.log('onShowを実行')
-    },
     // renderで実行される
     onRender: () => {
-        console.log('onRenderを実行')
+        console.log('MyCollectionViewのonRenderを実行')
     }
 });
-
 
 // Model
 const Person = Backbone.Model.extend({
     defaults: {
-        name: 'Alice',
-        age: 20
+        members: [
+            'yai',
+            'mike',
+            'sally',
+            'boo'
+        ]
     }
 });
    
 const person = new Person();
-const contact = new Contact({
+const myItemView = new MyItemView({
     model: person
 });
-contact.render();
+const myCollectionView = new MyCollectionView();
+myCollectionView.render()
