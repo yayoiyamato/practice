@@ -1,6 +1,7 @@
 'use strict';
 
 /*
+ *  TODO: 非同期でデータ取得中Loading画面にする
  *  TODO: 表示件数が○件以上のとき親要素にクラス付与する
  *  TODO: ↓の方法以外で綺麗にHTMLかく方法調べる
  *        - templateをjs側に直書きしない
