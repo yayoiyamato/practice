@@ -10,52 +10,83 @@
  */
 
 // View
-const MyItemView = Backbone.Marionette.ItemView.extend({
+const MemberView = Backbone.Marionette.ItemView.extend({
+    template: '#template',
     initialize: () => {
-        console.log('MyItemViewのinitializeを実行')
+        console.log('MemberViewのinitializeを実行')
+    },
+    ui: {
+        members: '#members' 
     },
     onBeforeShow: () => {
-        console.log('MyItemViewのonBeforeShowを実行')
+        console.log('MemberViewのonBeforeShowを実行')
     },
-    // Region.showで実行される
+    // RegionでshowされたViewに対して発生
+    // 呼ばれるタイミングは、レンダリングされて画面に表示された後
     onShow: () => {
-        console.log('MyItemViewのonShowを実行')
+        console.log('MemberViewのonShowを実行')
     },
     // renderで実行される
     onRender: () => {
-        console.log('MyItemViewのonRenderを実行')
+        console.log('MemberViewのonRenderを実行')
     }
 });
 
 // CollectionView
-const MyCollectionView = Backbone.Marionette.CollectionView.extend({
+const MembersView = Backbone.Marionette.CollectionView.extend({
     initialize: () => {
-        console.log('MyCollectionViewのinitializeを実行')
+        console.log('MembersViewのinitializeを実行')
     },
+    // childView: MemberView,
     // テンプレート内でChildViewを設置する要素のセレクターを登録
     regions: {
+
+    },
+    onBeforeShow: () => {
+        console.log('MembersViewのonBeforeShowを実行')
     },
     // renderで実行される
     onRender: () => {
-        console.log('MyCollectionViewのonRenderを実行')
+        const template = this.template(this.model.toJSON());
+        this.$el.html(template);
+        return this;
     }
 });
 
 // Model
-const Person = Backbone.Model.extend({
+const Member = Backbone.Model.extend({
     defaults: {
-        members: [
-            'yai',
-            'mike',
-            'sally',
-            'boo'
-        ]
+        name : 'name',
+        type: 'monster'
     }
 });
-   
-const person = new Person();
-const myItemView = new MyItemView({
-    model: person
+
+// Collection
+const Members = Backbone.Collection.extend({ model: Member });
+
+const member = new Member();
+
+const members = new Members([
+    {
+        name : 'yai',
+        type: 'girl'
+    },
+    {
+        name : 'sally',
+    },
+    {
+        name : 'mike',
+    },
+    {
+        name : 'boo',
+        type: 'baby'
+    },
+]);
+
+const memberView = new MemberView({
+    model: member
 });
-const myCollectionView = new MyCollectionView();
-myCollectionView.render()
+memberView.render();
+
+const membersView = new MembersView();
+membersView.render()

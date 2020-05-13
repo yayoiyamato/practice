@@ -10,7 +10,10 @@
 
     <!-- #membersの中にmemberを表示 -->
     <ul id="members"></ul>
-
+    <script type="text/template" id="template">
+        <li><%- name %>（<%- type %>）</li>
+    </script>
+    
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
