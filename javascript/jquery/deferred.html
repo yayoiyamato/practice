@@ -20,7 +20,7 @@
 
 'use strict';
 
-
+// APIなげる処理（の想定）1
 const getMonstersData =  () => {
    const dfd = $.Deferred()
    $.when($.getJSON('./monsters.json')).done((monsters) => {
@@ -34,6 +34,7 @@ const getMonstersData =  () => {
    return dfd.promise()
 }
 
+// APIなげる処理（の想定）2
 const getAnimalsData =  () => {
    const dfd = $.Deferred()
    $.when($.getJSON('./animals.json')).done((animals) => {
@@ -47,13 +48,16 @@ const getAnimalsData =  () => {
    return dfd.promise
 }
 
+// APIを2つ非同期で投げて帰ってきた順にそれぞれ後続の処理したい
 $.when.apply(null, getMonstersData()).done(() => {
+   //取得できたらこれ実行したい
    console.log('getMonstersData()呼び出しのdoneを実行')
 }).fail(() => {
    console.log('getMonstersData()呼び出しのfailを実行')
 })
 
 $.when.apply(null, getAnimalsData()).done(() => {
+   //取得できたらこれ実行したい
    console.log('getAnimalsData()呼び出しのdoneを実行')
 }).fail(() => {
    console.log('getAnimalsData()呼び出しのfailを実行')
