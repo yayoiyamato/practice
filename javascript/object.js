@@ -31,3 +31,30 @@ function multiply (a, b, c, d, e) {
 }
 console.log(multiply(-1, ...numbers, 5)) // -30
 
+
+/* 
+ * 分割代入
+ */
+
+let {x, y} = {x: 111, y: 222};
+console.log(x, y) // 111 222
+
+// 対応するプロパティがない変数には undefined が入る
+let {f, g, h} = {f: 'fff', gg: 'ggg', h: 'hhh'}
+console.log(f, g, h) // fff undefined hhh
+
+// 初期値も指定できる（対応するプロパティがない場合のため）
+let {i, j, k = 'kkk'} = {i: 'iii', j: 'jjj'}
+console.log(i, j, k) // iii jjj kkk
+
+
+function sayHello({name, favorite: {...favorite}}) {
+    // favoriteの中身を分割代入
+    const {food, character} = favorite
+    return 'やっぴ！' + name + 'だよ ' + food + 'と' + character + 'がだいすきだよ'
+
+}
+console.log(sayHello({
+    name: 'やい',
+    favorite: {food: 'ごはん', character: 'まいく'}
+}));  // やっぴ！やいだよ ごはんとまいくがだいすきだよ
