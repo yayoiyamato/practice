@@ -5,7 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>animation + mask-imageの練習</title>
     <style>
-        #wave1 {
+        @-webkit-keyframes move {
+            from {
+                -webkit-mask-position: 0 0;
+                mask-position: 0 0;
+            }
+            to {
+                -webkit-mask-position: -1000px 0;
+                mask-position: -1000px 0;
+            }
+        } 
+        @keyframes move {
+            from {
+                -webkit-mask-position: 0 0;
+                mask-position: 0 0;
+            }
+            to {
+                -webkit-mask-position: -1000px 0;
+                mask-position: -1000px 0;
+            }
+        } 
+        .gradient {
             width: 1000px;
             height: 100px;
             margin-bottom: 50px;
@@ -13,18 +33,22 @@
             -webkit-mask-image: linear-gradient(rgba(0, 0, 0, 1.0), transparent);
             mask-image: linear-gradient(rgba(0, 0, 0, 1.0), transparent);
         }
-        #wave2 {
+        .wave {
             width: 1000px;
             height: 200px;
             background-color: pink;
-           -webkit-mask-image: url(./wave.svg);
-            mask-image: url(./wave.svg),;
+            -webkit-mask-image: url(./wave.svg);
+            mask-image: url(./wave.svg);
+            -webkit-animation: move 6s linear infinite;
+            animation: move 6s linear infinite;
         }
     </style>
 </head>
 <body>
-    <div id="wave1"></div>
-    <div id="wave2"></div>
+    <!-- mask-imageでグラデーション -->
+    <div class="gradient"></div>
+    <!-- mask-image + animation で波 -->
+    <div class="wave"></div>
     
 </body>
 </html>
