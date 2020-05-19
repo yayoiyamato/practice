@@ -43,13 +43,28 @@
             -webkit-animation: move 6s linear infinite;
             animation: move 6s linear infinite;
         }
-    </style>
+        .monster {
+            width: 680px;
+            margin: 50px auto;
+            -webkit-mask-image: url(./heart.png);
+            -webkit-mask-size: contain;
+            -webkit-mask-position: 40% bottom;
+            -webkit-mask-repeat: no-repeat;
+            mask-image: url(./heart.png);
+            mask-size: contain;
+            mask-position: 40% bottom;
+            mask-repeat: no-repeat;
+        }
+</style>
 </head>
 <body>
     <!-- mask-imageでグラデーション -->
     <div class="gradient"></div>
     <!-- mask-image + animation で波 -->
     <div class="wave"></div>
+
+    <!-- mask-imageでpngでマスク -->
+    <div class="monster"><img src="./monster.jpg" alt=""></div>
     
 </body>
 </html>
