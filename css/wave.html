@@ -5,17 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>animation + mask-imageの練習</title>
     <style>
-        #wave {
-            width: 100px;
+        #wave1 {
+            width: 1000px;
             height: 100px;
+            margin-bottom: 50px;
             background-color: pink;
             -webkit-mask-image: linear-gradient(rgba(0, 0, 0, 1.0), transparent);
             mask-image: linear-gradient(rgba(0, 0, 0, 1.0), transparent);
         }
+        #wave2 {
+            width: 1000px;
+            height: 200px;
+            background-color: pink;
+           -webkit-mask-image: url(./wave.svg);
+            mask-image: url(./wave.svg),;
+        }
     </style>
 </head>
 <body>
-    <div id="wave"></div>
+    <div id="wave1"></div>
+    <div id="wave2"></div>
     
 </body>
 </html>
