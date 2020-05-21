@@ -35,6 +35,7 @@ console.log('empty は' + check(empty))
 console.log('zero は' + check(zero))
 console.log('undefined は' + check(undefined))
 console.log('null は' + check(null))
+console.log('* * * * * * * * * * * *')
 
 function check(element) {
     if (element) {
@@ -42,4 +43,14 @@ function check(element) {
     } else {
       return 'false';
     }
-  }
+}
+
+
+/* 
+ *  配列の空判定
+ *  Array.length
+ * 
+ */ 
+
+console.log('emptyArray は' + check(emptyArray))
+console.log('emptyArray.length は' + check(emptyArray.length))
