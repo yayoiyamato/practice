@@ -27,20 +27,19 @@ function check(element) {
  *  - null
  */
 
-console.log('string は' + check('string'))
-console.log('-1 は' + check(-1))
-console.log('1 は' + check(1))
-console.log('0.1 は' + check(0.1))
-console.log('{} は' + check({}))
-console.log('[] は' + check([]))
-console.log('Infinity は' + check(Infinity))
-console.log('-Infinity は' + check(-Infinity))
-console.log('* * * * * * * * * * * *')
-console.log('空 は' + check(''))
-console.log('0 は' + check(0))
-console.log('NaN は' + check(NaN))
-console.log('undefined は' + check(undefined))
-console.log('null は' + check(null))
+console.log('string は' + check('string')) // true
+console.log('-1 は' + check(-1)) // true
+console.log('1 は' + check(1)) // true
+console.log('0.1 は' + check(0.1)) // true
+console.log('{} は' + check({})) // true
+console.log('[] は' + check([])) // true
+console.log('Infinity は' + check(Infinity)) // true
+console.log('-Infinity は' + check(-Infinity)) // true
+console.log('空 は' + check('')) // false
+console.log('0 は' + check(0)) // false
+console.log('NaN は' + check(NaN)) // false
+console.log('undefined は' + check(undefined)) // false
+console.log('null は' + check(null)) // false
 console.log('* * * * * * * * * * * *')
 
 
