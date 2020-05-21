@@ -45,7 +45,7 @@ console.log('* * * * * * * * * * * *')
 
 /* 
  *  配列の空判定
- *  Array.length
+ *  [].length
  */ 
 
 console.log('[] は' + check([])) // true
@@ -117,7 +117,7 @@ console.log('* * * * * * * * * * * *')
 
 /* 
  *  整数判定
- *  isFiniteとの使い分けは小数を含むかどうか
+ *  Number.isFinite()との使い分けは小数を含むかどうか
  */ 
 
 console.log('Number.isInteger(0) は' + check(Number.isInteger(0)))  // true
