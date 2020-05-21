@@ -23,17 +23,23 @@ const plusNumber = 1
 const emptyObject = {}
 const emptyArray = []
 const empty = ''
-// const nuru = document.getElementById("yai") // 存在しない要素
 let undefined
 
-console.log('string は' + (string ? 'true' : 'false'))
-console.log('minusNumber は' + (minusNumber ? 'true' : 'false'))
-console.log('plusNumber は' + (plusNumber ? 'true' : 'false'))
-console.log('emptyObject は' + (emptyObject ? 'true' : 'false'))
-console.log('emptyArray は' + (emptyArray ? 'true' : 'false'))
+console.log('string は' + check(string))
+console.log('minusNumber は' + check(minusNumber))
+console.log('plusNumber は' + check(plusNumber))
+console.log('emptyObject は' + check(emptyObject))
+console.log('emptyArray は' + check(emptyArray))
 console.log('* * * * * * * * * * * *')
-console.log('empty は' + (empty ? 'true' : 'false'))
-console.log('zero は' + (zero ? 'true' : 'false'))
-console.log('undefined は' + (undefined ? 'true' : 'false'))
-// console.log('nuru は' + (nuru ? 'true' : 'false'))
+console.log('empty は' + check(empty))
+console.log('zero は' + check(zero))
+console.log('undefined は' + check(undefined))
+console.log('null は' + check(null))
 
+function check(element) {
+    if (element) {
+      return 'true';
+    } else {
+      return 'false';
+    }
+  }
