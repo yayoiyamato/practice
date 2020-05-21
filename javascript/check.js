@@ -8,44 +8,36 @@ function check(element) {
     }
 }
 
-const string = 'string'
-const minusNumber = -1
-const plusNumber = 1
-const floatNumber = 0.1
-const emptyObject = {}
-const emptyArray = []
-const zero = 0
-
 /* 
  *  存在チェック
  * 
  *  # true
- *  - 'string': 文字列
- *  - 1, -1 : 整数（正・負）
- *  - 0.1 : 少数
- *  - {} : 空のオブジェクト
- *  - [] : 空の配列
- *  - ±Infinity : 無限大
+ *  - 文字列
+ *  - 整数（正・負）
+ *  - 少数
+ *  - 空のオブジェクト {}
+ *  - 空の配列 []
+ *  - 無限大 ±Infinity
  * 
  *  # false
- *  - '' : 空
+ *  - 空
  *  - 0
  *  - NaN(Number.NaN)
  *  - undefined
  *  - null
  */
 
-console.log('string は' + check(string))
-console.log('minusNumber は' + check(minusNumber))
-console.log('plusNumber は' + check(plusNumber))
-console.log('floatNumber は' + check(floatNumber))
-console.log('emptyObject は' + check(emptyObject))
-console.log('emptyArray は' + check(emptyArray))
+console.log('string は' + check('string'))
+console.log('-1 は' + check(-1))
+console.log('1 は' + check(1))
+console.log('0.1 は' + check(0.1))
+console.log('{} は' + check({}))
+console.log('[] は' + check([]))
 console.log('Infinity は' + check(Infinity))
 console.log('-Infinity は' + check(-Infinity))
 console.log('* * * * * * * * * * * *')
-console.log('empty は' + check(''))
-console.log('zero は' + check(zero))
+console.log('空 は' + check(''))
+console.log('0 は' + check(0))
 console.log('NaN は' + check(NaN))
 console.log('undefined は' + check(undefined))
 console.log('null は' + check(null))
@@ -57,8 +49,8 @@ console.log('* * * * * * * * * * * *')
  *  Array.length
  */ 
 
-console.log('emptyArray は' + check(emptyArray)) // true
-console.log('emptyArray.length は' + check(emptyArray.length)) // false
+console.log('[] は' + check([])) // true
+console.log('[].length は' + check([].length)) // false
 console.log('* * * * * * * * * * * *')
 
 
@@ -67,9 +59,9 @@ console.log('* * * * * * * * * * * *')
  *  Object.keys({}).length
  */ 
 
-console.log('emptyObject は' + check(emptyObject)) // true
-console.log('Object.keys(emptyObject) は' + check(Object.keys(emptyObject))) // true
-console.log('Object.keys(emptyObject).length は' + check(Object.keys(emptyObject).length)) // false
+console.log('{} は' + check({})) // true
+console.log('Object.keys({}) は' + check(Object.keys({}))) // true
+console.log('Object.keys({}).length は' + check(Object.keys({}).length)) // false
 console.log('* * * * * * * * * * * *')
 
 
@@ -80,18 +72,18 @@ console.log('* * * * * * * * * * * *')
  *  型変換を意図しない場合は Number.isNaN()を使用する
  */ 
 
-console.log('isNaN(zero) は' + check(isNaN(zero)))  // false
-console.log('isNaN(minusNumber)  は' + check(isNaN(minusNumber)))  // false
-console.log('isNaN(plusNumber)  は' + check(isNaN(plusNumber)))  // false
-console.log('isNaN(floatNumber) は' + check(isNaN(floatNumber)))  // false
+console.log('isNaN(0) は' + check(isNaN(0)))  // false
+console.log('isNaN(-1) は' + check(isNaN(-1)))  // false
+console.log('isNaN(1) は' + check(isNaN(1)))  // false
+console.log('isNaN(0.1) は' + check(isNaN(0.1)))  // false
 console.log("isNaN('') は" + check(isNaN('')))  // false
 console.log('isNaN(null) は' + check(isNaN(null)))  // false
 console.log('isNaN(undefined) は' + check(isNaN(undefined)))  // true
 console.log('* * * * * * * * * * * *')
-console.log('Number.isNaN(zero) は' + check(Number.isNaN(zero)))  // false
-console.log('Number.isNaN(minusNumber)  は' + check(Number.isNaN(minusNumber)))  // false
-console.log('Number.isNaN(plusNumber)  は' + check(Number.isNaN(plusNumber)))  // false
-console.log('Number.isNaN(floatNumber) は' + check(Number.isNaN(floatNumber)))  // false
+console.log('Number.isNaN(0) は' + check(Number.isNaN(0)))  // false
+console.log('Number.isNaN(-1) は' + check(Number.isNaN(-1)))  // false
+console.log('Number.isNaN(1) は' + check(Number.isNaN(1)))  // false
+console.log('Number.isNaN(0.1) は' + check(Number.isNaN(0.1)))  // false
 console.log("Number.isNaN('') は" + check(Number.isNaN('')))  // false
 console.log('Number.isNaN(null) は' + check(Number.isNaN(null)))  // false
 console.log('Number.isNaN(undefined) は' + check(Number.isNaN(undefined)))  // false
@@ -105,13 +97,35 @@ console.log('* * * * * * * * * * * *')
  *  型変換を意図しない場合は Number.isFiniteは()を使用する
  *  ※ Infinityに対して行った計算はInfinityになるが、Infinityで割った値は0になる
  */ 
-console.log('isFinite(zero) は' + check(isFinite(zero)))  // true
+
+console.log('isFinite(0) は' + check(isFinite(0)))  // true
+console.log('isFinite(-1) は' + check(isFinite(-1)))  // true
+console.log('isFinite(1) は' + check(isFinite(1)))  // true
+console.log('isFinite(0.1) は' + check(isFinite(0.1)))  // true
 console.log("isFinite('') は" + check(isFinite('')))  // true
 console.log('isFinite(null) は' + check(isFinite(null)))  // true
 console.log('isFinite(undefined) は' + check(isFinite(undefined)))  // false
 console.log('* * * * * * * * * * * *')
-console.log('Number.isFinite(zero) は' + check(Number.isFinite(zero)))  // true
+console.log('Number.isFinite(0) は' + check(Number.isFinite(0)))  // true
+console.log('Number.isFinite(-1)  は' + check(Number.isFinite(-1)))  // true
+console.log('Number.isFinite(1)  は' + check(Number.isFinite(1)))  // true
+console.log('Number.isFinite(0.1) は' + check(Number.isFinite(0.1)))  // true
 console.log("Number.isFinite('') は" + check(Number.isFinite('')))  // false
 console.log('Number.isFinite(null) は' + check(Number.isFinite(null)))  // false
 console.log('Number.isFinite(undefined) は' + check(Number.isFinite(undefined)))  // false
+console.log('* * * * * * * * * * * *')
+
+
+/* 
+ *  整数判定
+ *  isFiniteとの使い分けは小数を含むかどうか
+ */ 
+
+console.log('Number.isInteger(0) は' + check(Number.isInteger(0)))  // true
+console.log('Number.isInteger(-1)  は' + check(Number.isInteger(-1)))  // true
+console.log('Number.isInteger(1)  は' + check(Number.isInteger(1)))  // true
+console.log('Number.isInteger(0.1) は' + check(Number.isInteger(0.1)))  // false
+console.log("Number.isInteger('') は" + check(Number.isInteger('')))  // false
+console.log('Number.isInteger(null) は' + check(Number.isInteger(null)))  // false
+console.log('Number.isInteger(undefined) は' + check(Number.isInteger(undefined)))  // false
 console.log('* * * * * * * * * * * *')
