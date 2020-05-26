@@ -49,6 +49,14 @@
     ul
       li(v-for='(val, name, index) in monster') {{ index }}：{{ name }} = {{ val }}
     hr
+    h2 v-bind
+    p HTML の属性を動的に指定できる
+      br
+      | ｛｛ ｝｝はhtmlのタグの中に書くことはができないからv-bind使う
+    p :value="formData（やっぴ）"
+      br
+      input(type="text" :value="formData")
+    hr
 
 </template>
 
@@ -76,7 +84,8 @@ export default {
           'sally',
           'boo'
         ]
-      }
+      },
+      formData: 'やっぴ'
     }
   }
 }
