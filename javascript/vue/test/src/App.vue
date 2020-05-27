@@ -1,6 +1,7 @@
 <template lang="pug">
   #app
     img(alt="Vue logo" src="./assets/logo.png")
+    br
     h2 ｛｛ ｝｝
     p DOM要素の内側をテキストノードとして部分的に書き換える
     p 名前： {{ name }}
@@ -18,7 +19,8 @@
     h2 v-show
     p 式の値の真偽に応じて、要素の CSS プロパティ display をトグルし、表示／非表示を切り替える
     p(v-show='isShow') isShowがtrueのとき表示
-    button(@click='isShow = !isShow') true / false 切替
+    p
+      button(@click='isShow = !isShow') true / false 切替
     hr
     h2 v-if, v-else, v-else-if
     p 初期表示において条件が最初に true になったときに描画（false の場合描画しない）
@@ -30,7 +32,8 @@
       span(v-else-if="color === 'yellow'") colorが「yellow」のとき表示
       span(v-else) colorがその他のとき表示
       span （color = {{ color }}）
-    button(@click='color = colors[ Math.floor( Math.random() * 3 ) + 1 ]') color の値を変更
+    p
+      button(@click='color = colors[ Math.floor( Math.random() * 3 ) + 1 ]') color の値を変更
     hr
     h2 v-for
     p 要素またはテンプレートブロックをループして描画する
@@ -99,6 +102,12 @@ export default {
   text-align center
   color #2c3e50
   margin-top 60px
+  h2
+    background-color #40b882
+    color white
+    padding 5px 15px
+    margin-bottom  0
+    display inline-block
   ul
     padding 0
     li
