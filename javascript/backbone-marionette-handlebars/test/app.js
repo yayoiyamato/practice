@@ -15,16 +15,19 @@ define([
 
             // template: {
             //     type: 'handlebars',
-            //     template: Handlebars.compile('<p>name: {{ name }}</p>')
+            //     template: _.template('<h1>Title</h1><div id="first-region"></div>'),
             // },
-            // el: '.main',
+            el: '#main',
+            model: new Backbone.Model({
+                name: 'bar'
+            }),
             initialize: function () {
                 console.log('initialize')
             },
-            // onBeforeShow: function () {
-            //     console.log('onBeforeShow')
-            //     this.render();
-            // }
+            onBeforeShow: function () {
+                console.log('onBeforeShow')
+                this.render();
+            }
 
         });
 
