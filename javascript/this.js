@@ -1,39 +1,41 @@
 'use strict'
 
+/* デフォルト状態
+ * this = グローバルオブジェクト
+ */
+
 console.log(this) // {}
+ 
 
-var obj = {
-  value: 1,
-  show: function() {
-  
-    console.log(this.value); // 1
+/* 関数で呼び出した場合
+ * this = グローバルオブジェクト
+ */
 
-  /*
-  function show() {
-    console.log(this.value); // グローバル変数のvalueを呼ぶので undefined になる
-  }
-  */
-
-  /* 対処法①：thisを別の変数で持っておく
-   *「self」, 「that」, 「_this」が使われる事が多い
-   */
-  /*
-   const self = this
-  function show() {
-    console.log(self.value); // 1
-  }
-  */
+function printThis() {
+  console.log(this)
+}
+printThis() // undefied ←なんで？{}じゃないの？
 
 
-  /* 対処法②：アロー関数式を使う
-     アロー関数式で宣言された関数は、宣言された時点で、thisを確定（＝束縛）させる
-  */
-  
-  const show = () => {
-    // この時点の this(= obj)を確定させる
-    console.log(this.value); // 1
-  }
-    show();
-  }
-};
-obj.show();
+/* メソッドで呼び出した場合
+ * this = メソッドが属しているオブジェクト
+ */
+
+const obj = {
+  name: 'obj',
+  printThis: printThis
+}
+obj.printThis() // { name: 'obj', test: [Function: test] }
+
+
+/* コンストラクタで呼び出した場合
+ * this = new演算子を使って生成したインスタンス
+ */
+
+function Monster(name, height) {
+  console.log(this) // Monster {}
+  this.name = name
+  this.height = height
+}
+const mike = new Monster('マイク', 120)
+
