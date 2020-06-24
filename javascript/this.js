@@ -25,9 +25,10 @@ const obj = {
   name: 'obj',
   printThis: printThis
 }
-obj.printThis() // { name: 'obj', test: [Function: test] }
+obj.printThis() // { name: 'obj', printThis: [Function: printThis] }
 
-/* コンストラクタで呼び出した場合
+
+/* クラスのコンストラクタで呼び出した場合
  * this = new演算子を使って生成したインスタンス
  */
 
@@ -38,6 +39,26 @@ function Monster(name, height) {
   console.log(this) // Monster { name: 'マイク', height: 120 }
 }
 const mike = new Monster('マイク', 120)
+
+
+/* apply / callで呼び出した場合
+ * thisの中身を任意のオブジェクトに変更できる
+ *
+ * 関数名.apply(関数の処理の対象となる要素,関数で使う引数(配列のみ))
+ * 関数名.call(関数の処理の対象となる要素,関数で使う引数,関数で使う引数,関数で使う引数… )
+ */
+
+const sally = { name: 'サリー' }
+
+const sayBodyColor = function() {
+  // arguments = { '0': '水色', '1': '紫', '2': 'グレー' }
+  console.log(`${this.name}だよ、体の色は、${Object.values(arguments).join('と')}だよ`)
+}
+sayBodyColor.apply(sally, ['水色', '紫', 'グレー']) // サリーだよ、体の色は、水色と紫とグレーだよ
+sayBodyColor.call(sally, '水色', '紫', 'グレー') // サリーだよ、体の色は、水色と紫とグレーだよ
+
+
+/////////////////////////////////////////////////////////////////
 
 
 /* メソッド内で関数で呼び出した場合
