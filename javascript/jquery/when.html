@@ -20,7 +20,6 @@
  */
 
 'use strict';
-const target = document.getElementById('result').innerHTML = 'やっぴ'
 
 // $.when(
 //     $.getJSON('./monsters.json'),
@@ -35,32 +34,33 @@ const target = document.getElementById('result').innerHTML = 'やっぴ'
 //     console.log('error');
 // })
 
-$.when(test(true)).done(function(result) {
-    // すべて成功した時の処理
-    console.log(result)
+const target = document.getElementById('result')
+// 普通の処理と非同期の処理が混ざった関数
+const test = function (isHidouki) {
+    const dfd = $.Deferred()
+    if (isHidouki) {
+        $.when($.getJSON('./monsters.json')).done(function(data_monsters) {
+            console.log(data_monsters)
+            target.innerHTML = 'testのdone'
+            dfd.resolve()
+        }).fail(function() {
+            target.innerHTML = 'testのfail'
+            dfd.reject()
+       })
+    } else {
+        target.innerHTML = '非同期じゃない方の処理'
+        dfd.resolve()
+    }
+    return dfd.promise
+}
+
+
+$.when(test(true)).done(function() {
+    target.innerHTML = '呼び出し元のdone'
 })
 .fail(function() {
-    // エラーがあった時
-    console.log('error');
+    target.innerHTML = '呼び出し元のfail'
 })
-
-const target = document.getElementById('result')
-
-const test = (isHidouki) => {
-    if (isHidouki) {
-        const dfd = $.Deferred
-        $.when($.getJSON('./animals.json')).done((animals) => {
-            target.innerHTML = 'getAnimalsData()内のdoneを実行'
-            dfd.resolve()
-        }).fail(() => {
-            target.innerHTML = 'getAnimalsData()内のfailを実行'
-            dfd.reject()
-        })
-        return dfd.promise
-    } else {
-        target.innerHTML = '非同期じゃない方を実行'
-    }
-}
 
 </script>
 
