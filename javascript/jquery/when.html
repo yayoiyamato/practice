@@ -7,6 +7,7 @@
 </head>
 <body>
 <h1>$.whenの練習</h1>
+<div id="result"></div>
    
 </body>
 
@@ -19,18 +20,47 @@
  */
 
 'use strict';
-$.when(
-    $.getJSON('./monsters.json'),
-    $.getJSON('./animals.json')
-)
-.done(function(data_monsters, data_animals) {
+const target = document.getElementById('result').innerHTML = 'やっぴ'
+
+// $.when(
+//     $.getJSON('./monsters.json'),
+//     $.getJSON('./animals.json')
+// )
+// .done(function(data_monsters, data_animals) {
+//     // すべて成功した時の処理
+//     console.log(data_monsters, data_animals);
+// })
+// .fail(function() {
+//     // エラーがあった時
+//     console.log('error');
+// })
+
+$.when(test(true)).done(function(result) {
     // すべて成功した時の処理
-    console.log(data_monsters, data_animals);
+    console.log(result)
 })
 .fail(function() {
     // エラーがあった時
     console.log('error');
-});
+})
+
+const target = document.getElementById('result')
+
+const test = (isHidouki) => {
+    if (isHidouki) {
+        const dfd = $.Deferred
+        $.when($.getJSON('./animals.json')).done((animals) => {
+            target.innerHTML = 'getAnimalsData()内のdoneを実行'
+            dfd.resolve()
+        }).fail(() => {
+            target.innerHTML = 'getAnimalsData()内のfailを実行'
+            dfd.reject()
+        })
+        return dfd.promise
+    } else {
+        target.innerHTML = '非同期じゃない方を実行'
+    }
+}
 
 </script>
 
