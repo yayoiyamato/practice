@@ -34,34 +34,65 @@
 //     console.log('error');
 // })
 
-const target = document.getElementById('result')
+// const target = document.getElementById('result')
 // 普通の処理と非同期の処理が混ざった関数
-const test = function (isHidouki) {
-    const dfd = $.Deferred()
-    if (isHidouki) {
-        $.when($.getJSON('./monsters.json')).done(function(data_monsters) {
-            console.log(data_monsters)
-            target.innerHTML = 'testのdone'
-            dfd.resolve()
-        }).fail(function() {
-            target.innerHTML = 'testのfail'
-            dfd.reject()
-       })
-    } else {
-        target.innerHTML = '非同期じゃない方の処理'
-        dfd.resolve()
-    }
-    return dfd.promise
+// const test = function (isHidouki) {
+//     const dfd = $.Deferred()
+//     if (isHidouki) {
+//         $.when($.getJSON('./monsters.json')).done(function(data_monsters) {
+//             console.log(data_monsters)
+//             target.innerHTML = 'testのdone'
+//             dfd.resolve()
+//         }).fail(function() {
+//             target.innerHTML = 'testのfail'
+//             dfd.reject()
+//        })
+//     } else {
+//         target.innerHTML = '非同期じゃない方の処理'
+//         dfd.resolve()
+//     }
+//     return dfd.promise
+// }
+
+
+// $.when(test(true)).done(function() {
+//     target.innerHTML = '呼び出し元のdone'
+// })
+// .fail(function() {
+//     target.innerHTML = '呼び出し元のfail'
+// })
+
+$(function () {
+    $.when(first('引数1'), second(2)).done(doneFunc);
+});
+
+function first(arg) {
+    return $.Deferred(function () {
+        var self = this;
+        // 2秒後にdata1オブジェクトデータが得られる非同期処理
+        setTimeout(function () {
+            var data1 = { func: 'first', data: '引数は[' + arg + ']だった。' };
+            self.resolve(data1);
+        }, 2000);
+    });
 }
-
-
-$.when(test(true)).done(function() {
-    target.innerHTML = '呼び出し元のdone'
-})
-.fail(function() {
-    target.innerHTML = '呼び出し元のfail'
-})
-
+ 
+function second(arg) {
+    return $.Deferred(function () {
+        var self = this;
+        // 3秒後にdata2オブジェクトデータが得られる非同期処理
+        setTimeout(function () {
+            var data2 = { func: 'second', data: '引数は[' + arg + ']だった。' }; 
+            self.resolve(data2);
+        }, 3000);
+    });
+}
+ 
+function doneFunc(data1, data2) {
+    var result = '[doneFunc]' + JSON.stringify(data1) + ':' + JSON.stringify(data2);
+    console.log(result);
+    alert(result);
+}
 </script>
 
 </html>
