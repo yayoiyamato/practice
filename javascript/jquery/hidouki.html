@@ -18,14 +18,27 @@
 /*
  * ポイント情報を取得
  */
- function getPointData(isMember = true) {
+ function getAllPointData(isMember = true) {
   if (isMember) {
-    // 会員情報を取得
-      // 履歴情報を取得
-        // 成功の場合
-          // 結果が0件の場合、ありませんメッセージ
-          // 結果が1件以上の場合、表示用の配列に入れる
-        // 失敗の場合、エラーメッセージをセットしループぬける
+    let pointA = []
+    let pointB = []
+    getMemberData().done(function(memberData) {
+      if (memberData.length > 0) {
+        memberData.some(function(e, i) {
+          $.when(getEachPointData()).done(function(pointDataA, pointDataB) {
+            // FIXME: jsonの結果とれん
+            pointA.push(pointDataA)
+            pointB.push(pointDataB)
+            console.log(pointA)
+            console.log(pointB)
+          }).fail(function() {
+            return true
+          })
+        })
+      }
+    }).fail(function() {
+      console.log('ERROR：getMemberData')
+    })
   } else {
     // 履歴情報を取得
       // 成功の場合
@@ -43,35 +56,40 @@
   $.get("./members.json").done(function(memberData) {
     d.resolve(memberData)
   }).fail(function() {
-    console.log('メンバー情報取得に失敗')
-    d.resolve()
+    d.reject()
   })
   return d.promise()
 }
 
 /*
- * ポイント情報Aを取得
+ * 会員ごとのポイント情報を取得
  */
- function getPointAData() {
-  const d = $.Deferred()
+ function getEachPointData() {
+  const da = $.Deferred()
+  const db = $.Deferred()
+  const task = []
+
   $.get("./pointsA.json").done(function(pointDataA) {
-    d.resolve(pointDataA)
+    da.resolve(pointDataA)
+  }).fail(function() {
+    console.log('ERROR：pointDataA')
+    da.reject()
   })
-  return d.promise()
-}
+  task.push(da.promise())
 
-/*
- * ポイント情報Bを取得
- */
- function getPointBData() {
-  const d = $.Deferred()
   $.get("./pointsB.json").done(function(pointDataB) {
-    d.resolve(pointDataB)
+    // console.log(pointDataB)
+    db.resolve(pointDataB)
+  }).fail(function() {
+    console.log('ERROR：pointDataB')
+    db.reject()
   })
-  return d.promise()
-}
-getPointData()
+  task.push(db.promise())
 
+  return task
+}
+
+getAllPointData()
 </script>
 
 </html>
