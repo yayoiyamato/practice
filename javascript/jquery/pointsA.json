@@ -1,0 +1,22 @@
+[
+    {
+        "date" : 20200601,
+        "type": "provide",
+        "point": 200
+    },
+    {
+        "date" : 20200605,
+        "type": "use",
+        "point": 10
+    },
+    {
+        "date" : 20200610,
+        "type": "provide",
+        "point": 80
+    },
+    {
+        "date" : 20200615,
+        "type": "use",
+        "point": 100
+    }
+]
