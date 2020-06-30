@@ -25,12 +25,11 @@
     getMemberData().done(function(memberData) {
       if (memberData.length > 0) {
         memberData.some(function(e, i) {
-          $.when(getEachPointData()).done(function(pointDataA, pointDataB) {
-            // FIXME: jsonの結果とれん
-            pointA.push(pointDataA)
-            pointB.push(pointDataB)
-            console.log(pointA)
-            console.log(pointB)
+          $.when.apply(null, getEachPointData()).done(function(pointDataA, pointDataB) {
+            pointA[e.name] = pointDataA
+            pointB[e.name] = pointDataB
+            console.log(i, 'pointA', pointA)
+            console.log(i, 'pointB', pointB)
           }).fail(function() {
             return true
           })
