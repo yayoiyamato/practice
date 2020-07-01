@@ -29,13 +29,14 @@ function getAllPointData(isMember = true) {
         memberData.some(function(e, i) {
           allPoint[e.tel] = []
           $.when.apply(null, getEachPointData(e.tel)).done(function(pointDataA, pointDataB) {
+            // FIXME: 配列に入れる処理おかしい
             // 表示用（全会員分がっちゃんこ）
-            dispPointA.push(pointDataA[i])
-            dispPointB.push(pointDataB[i])
+            dispPointA.push(pointDataA)
+            dispPointB.push(pointDataB)
             // 全件保存用（各会員ごとのかたまりに）
             allPoint[e.tel].push({
-              "a": pointDataA[i],
-              "b": pointDataB[i]
+              "a": pointDataA,
+              "b": pointDataB
             })
             console.log(pointDataA)
             console.log(pointDataB)
@@ -46,7 +47,7 @@ function getAllPointData(isMember = true) {
         })
       }
     }).fail(function() {
-      // 会員情報の取得に失敗したら08011111111のデータを取得
+      // 会員情報の取得に失敗したらデフォルト会員のデータを取得
       console.log('会員情報の取得に失敗')
       getDefaultPointData()
     })
