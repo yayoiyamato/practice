@@ -15,32 +15,33 @@
 
 <script>
 
+let dispPointA = []
+let dispPointB = []
+let allPoint = []
+
 /*
  * ポイント情報を取得
  */
- function getAllPointData(isMember = true) {
+function getAllPointData(isMember = true) {
   if (isMember) {
-    let pointA = []
-    let pointB = []
     getMemberData().done(function(memberData) {
       if (memberData.length > 0) {
-        let pointDataAll = []
         memberData.some(function(e, i) {
+          allPoint[e.tel] = []
           $.when.apply(null, getEachPointData(e.tel)).done(function(pointDataA, pointDataB) {
-            pointDataA.forEach((data) => {
-              pointDataAll.push(data)
-              pointA.push(data)
+            // 表示用（全会員分がっちゃんこ）
+            dispPointA.push(pointDataA[i])
+            dispPointB.push(pointDataB[i])
+            // 全件保存用（各会員ごとのかたまりに）
+            allPoint[e.tel].push({
+              "a": pointDataA[i],
+              "b": pointDataB[i]
             })
-            pointDataB.forEach((data) => {
-              pointDataAll.push(data)
-              pointB.push(data)
-            })
+            console.log(pointDataA)
+            console.log(pointDataB)
+            console.log(allPoint)
           }).fail(function() {
             return true
-          }).always(function() {
-            console.log(pointDataAll)
-            console.log(pointA)
-            console.log(pointB)
           })
         })
       }
@@ -53,7 +54,6 @@
     getDefaultPointData()
   }
 }
-
 /*
  * 会員情報を取得
  */
@@ -72,10 +72,10 @@ function getMemberData() {
  */
 function getDefaultPointData() {
   const defaulTel = '08011111111'
-  $.when.apply(null, getEachPointData(defaulTel)).done(function(pointDataA, pointDataB) {
-    pointA = pointDataA
-    pointB = pointDataB
-    console.log(pointA, pointB)
+  $.when.apply(null, getEachPointData(defaultTel)).done(function(pointDataA, pointDataB) {
+    dispPointA = pointDataA
+    dispPointB = pointDataB
+    console.log(dispPointA, dispPointB)
   }).fail(function() {
     console.log('ポイント情報の取得に失敗')
   })
