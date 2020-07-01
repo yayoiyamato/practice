@@ -24,33 +24,40 @@
     let pointB = []
     getMemberData().done(function(memberData) {
       if (memberData.length > 0) {
+        let pointDataAll = []
         memberData.some(function(e, i) {
-          $.when.apply(null, getEachPointData()).done(function(pointDataA, pointDataB) {
-            pointA[e.name] = pointDataA
-            pointB[e.name] = pointDataB
-            console.log(i, 'pointA', pointA)
-            console.log(i, 'pointB', pointB)
+          $.when.apply(null, getEachPointData(e.tel)).done(function(pointDataA, pointDataB) {
+            pointDataA.forEach((data) => {
+              pointDataAll.push(data)
+              pointA.push(data)
+            })
+            pointDataB.forEach((data) => {
+              pointDataAll.push(data)
+              pointB.push(data)
+            })
           }).fail(function() {
             return true
+          }).always(function() {
+            console.log(pointDataAll)
+            console.log(pointA)
+            console.log(pointB)
           })
         })
       }
     }).fail(function() {
-      console.log('ERROR：getMemberData')
+      // 会員情報の取得に失敗したら08011111111のデータを取得
+      console.log('会員情報の取得に失敗')
+      getDefaultPointData()
     })
   } else {
-    // 履歴情報を取得
-      // 成功の場合
-        // 結果が0件の場合、ありませんメッセージ
-        // 結果が1件以上の場合、表示用の配列に入れる
-      // 失敗の場合、エラーメッセージをセット
+    getDefaultPointData()
   }
 }
 
 /*
  * 会員情報を取得
  */
- function getMemberData() {
+function getMemberData() {
   const d = $.Deferred()
   $.get("./members.json").done(function(memberData) {
     d.resolve(memberData)
@@ -61,15 +68,29 @@
 }
 
 /*
+ * デフォルトのポイント情報を取得
+ */
+function getDefaultPointData() {
+  const defaulTel = '08011111111'
+  $.when.apply(null, getEachPointData(defaulTel)).done(function(pointDataA, pointDataB) {
+    pointA = pointDataA
+    pointB = pointDataB
+    console.log(pointA, pointB)
+  }).fail(function() {
+    console.log('ポイント情報の取得に失敗')
+  })
+}
+
+/*
  * 会員ごとのポイント情報を取得
  */
- function getEachPointData() {
+function getEachPointData(tel) {
   const da = $.Deferred()
   const db = $.Deferred()
   const task = []
 
   $.get("./pointsA.json").done(function(pointDataA) {
-    da.resolve(pointDataA)
+    da.resolve(pointDataA.filter((e) => e.tel === tel))
   }).fail(function() {
     console.log('ERROR：pointDataA')
     da.reject()
@@ -77,8 +98,7 @@
   task.push(da.promise())
 
   $.get("./pointsB.json").done(function(pointDataB) {
-    // console.log(pointDataB)
-    db.resolve(pointDataB)
+    db.resolve(pointDataB.filter((e) => e.tel === tel))
   }).fail(function() {
     console.log('ERROR：pointDataB')
     db.reject()
