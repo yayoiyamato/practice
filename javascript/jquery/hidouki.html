@@ -5,111 +5,53 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>非同期の練習</title>
 </head>
+<style>
+  .loading {
+    background-color: pink;
+  }
+</style>
 <body>
 <h1>非同期の練習</h1>
-<div id="result"></div>
+<div id="temp-point-box" class="loading">
+  <h2>ポイント情報（仮）</h2>
+  <ul id="temp-point-list"></ul>
+  <p id="temp-point-message"></p>
+</div>
+<div id="reg-point-box" class="loading">
+  <h2>ポイント情報（本）</h2>
+  <ul id="reg-point-list"></ul>
+  <p id="reg-point-message"></p>
+</div>
+<p id="common-message"></p>
    
 </body>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
 <script>
-
-let dispPointA = []
-let dispPointB = []
-let allPoint = []
-
-/*
- * ポイント情報を取得
- */
-function getAllPointData(isMember = true) {
-  if (isMember) {
-    getMemberData().done(function(memberData) {
-      if (memberData.length > 0) {
-        memberData.some(function(e, i) {
-          allPoint[e.tel] = []
-          $.when.apply(null, getEachPointData(e.tel)).done(function(pointDataA, pointDataB) {
-            // FIXME: 配列に入れる処理おかしい
-            // 表示用（全会員分がっちゃんこ）
-            dispPointA.push(pointDataA)
-            dispPointB.push(pointDataB)
-            // 全件保存用（各会員ごとのかたまりに）
-            allPoint[e.tel].push({
-              "a": pointDataA,
-              "b": pointDataB
-            })
-            console.log(pointDataA)
-            console.log(pointDataB)
-            console.log(allPoint)
-          }).fail(function() {
-            return true
-          })
-        })
-      }
-    }).fail(function() {
-      // 会員情報の取得に失敗したらデフォルト会員のデータを取得
-      console.log('会員情報の取得に失敗')
-      getDefaultPointData()
-    })
-  } else {
-    getDefaultPointData()
-  }
+const ui = {
+  tempPointBox: $("#temp-point-box"), 
+  tempPointList: $("#temp-point-list"), 
+  tempPointMessage: $("#temp-point-message"), 
+  regPointBox: $("#reg-point-box"), 
+  regPointList: $("#reg-point-list"), 
+  regPointMessage: $("#reg-point-message"), 
+  commonMessage: $("#common-message"),
 }
-/*
- * 会員情報を取得
- */
-function getMemberData() {
+
+
+pointSectionTask().done(function() {
+  ui.tempPointBox.removeClass('loading')
+  ui.regPointBox.removeClass('loading')
+})
+
+function pointSectionTask() {
   const d = $.Deferred()
-  $.get("./members.json").done(function(memberData) {
-    d.resolve(memberData)
-  }).fail(function() {
-    d.reject()
-  })
+  d.resolve()
   return d.promise()
 }
 
-/*
- * デフォルトのポイント情報を取得
- */
-function getDefaultPointData() {
-  const defaulTel = '08011111111'
-  $.when.apply(null, getEachPointData(defaultTel)).done(function(pointDataA, pointDataB) {
-    dispPointA = pointDataA
-    dispPointB = pointDataB
-    console.log(dispPointA, dispPointB)
-  }).fail(function() {
-    console.log('ポイント情報の取得に失敗')
-  })
-}
 
-/*
- * 会員ごとのポイント情報を取得
- */
-function getEachPointData(tel) {
-  const da = $.Deferred()
-  const db = $.Deferred()
-  const task = []
-
-  $.get("./pointsA.json").done(function(pointDataA) {
-    da.resolve(pointDataA.filter((e) => e.tel === tel))
-  }).fail(function() {
-    console.log('ERROR：pointDataA')
-    da.reject()
-  })
-  task.push(da.promise())
-
-  $.get("./pointsB.json").done(function(pointDataB) {
-    db.resolve(pointDataB.filter((e) => e.tel === tel))
-  }).fail(function() {
-    console.log('ERROR：pointDataB')
-    db.reject()
-  })
-  task.push(db.promise())
-
-  return task
-}
-
-getAllPointData()
 </script>
 
 </html>
