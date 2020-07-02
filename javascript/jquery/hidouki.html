@@ -38,7 +38,7 @@ const ui = {
   regPointMessage: $("#reg-point-message"), 
   commonMessage: $("#common-message"),
 }
-const isMember = false
+const isMember = true
 const defaultTel = '08011111111'
 let memberList = []
 let tempPointList = []
@@ -66,11 +66,23 @@ function pointSectionTask() {
   const d = $.Deferred()
   if (isMember) {
     getMemberList().done(function() {
-      console.log(memberList)
-      d.resolve()
+      let task = []
+      memberList.some((m, i) => {
+        const dp = getPointData(m.tel)
+        task.push(dp)
+      })
+      // FIXME: Promise.all きいてへん
+      Promise.all(task).then(function() {
+        d.resolve()
+      }, function() {
+        // ポイント情報取得失敗したときの処理
+        d.resolve()
+      })
+    }).fail(function() {
+      console.log("fail")
     })
   } else {
-    $.when.apply(null, getPointData()).done(function() {
+    $.when.apply(null, getPointData()).always(function() {
       console.log(tempPointList, regPointList)
       d.resolve()
     })
@@ -111,7 +123,7 @@ function pointSectionTask() {
     da.resolve()
   }).fail(function() {
     tempPointMessage = 'ERROR：ポイント情報（仮）の取得に失敗しました。'
-    da.resolve()
+    da.reject()
   })
   task.push(da.promise())
 
@@ -122,7 +134,7 @@ function pointSectionTask() {
     db.resolve()
   }).fail(function() {
     regPointMessage = 'ERROR：ポイント情報（本）の取得に失敗しました。'
-    db.resolve()
+    db.reject()
   })
   task.push(db.promise())
 
