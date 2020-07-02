@@ -38,13 +38,14 @@ const ui = {
   regPointMessage: $("#reg-point-message"), 
   commonMessage: $("#common-message"),
 }
-const isMember = true
+const isMember = false
+const defaultTel = '08011111111'
 let memberList = []
-const tempPointList = []
+let tempPointList = []
 let tempPointMessage = ''
-const regPointList = []
+let regPointList = []
 let regPointMessage = ''
-const allPointList = []
+let allPointList = []
 let commonMessage = ''
 
 
@@ -69,7 +70,8 @@ function pointSectionTask() {
       d.resolve()
     })
   } else {
-    getPointData().done(function() {
+    $.when.apply(null, getPointData()).done(function() {
+      console.log(tempPointList, regPointList)
       d.resolve()
     })
   }
@@ -97,10 +99,34 @@ function pointSectionTask() {
  * @param {String} tel
  * @return Promise
  */
- function getPointData(tel) {
-  const d = $.Deferred()
-  d.resolve()
-  return d.promise()
+ function getPointData(tel = defaultTel) {
+  const da = $.Deferred()
+  const db = $.Deferred()
+  const task = []
+
+  $.get("./pointsA.json").done(function(result) {
+    tempPointList = tempPointList.concat(result.filter(
+      (e) => e.tel === tel)
+    )
+    da.resolve()
+  }).fail(function() {
+    tempPointMessage = 'ERROR：ポイント情報（仮）の取得に失敗しました。'
+    da.resolve()
+  })
+  task.push(da.promise())
+
+  $.get("./pointsB.json").done(function(result) {
+    regPointList = regPointList.concat(result.filter(
+      (e) => e.tel === tel)
+    )
+    db.resolve()
+  }).fail(function() {
+    regPointMessage = 'ERROR：ポイント情報（本）の取得に失敗しました。'
+    db.resolve()
+  })
+  task.push(db.promise())
+
+  return task
 }
 
 /*
