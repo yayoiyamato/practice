@@ -38,6 +38,8 @@ const ui = {
   regPointMessage: $("#reg-point-message"), 
   commonMessage: $("#common-message"),
 }
+const isMember = false
+const memberList = []
 const tempPointList = []
 const tempPointMessage = ''
 const regPointList = []
@@ -46,18 +48,57 @@ const allPointList = []
 const commonMessage = ''
 
 
+/*
+ * 呼び出し元
+ */
 pointSectionTask().done(function() {
   appendDOM()
   ui.tempPointBox.removeClass('loading')
   ui.regPointBox.removeClass('loading')
 })
 
+/*
+ * ポイント情報全体処理
+ * @return Promise
+ */
 function pointSectionTask() {
+  const d = $.Deferred()
+  if (isMember) {
+    getMemberList().done(function() {
+      d.resolve()
+    })
+  } else {
+    getPointData().done(function() {
+      d.resolve()
+    })
+  }
+  return d.promise()
+}
+
+/*
+ * グループ情報取得処理
+ * @return Promise
+ */
+ function getMemberList() {
   const d = $.Deferred()
   d.resolve()
   return d.promise()
 }
 
+/*
+ * ポイント情報取得処理
+ * @param {String} tel
+ * @return Promise
+ */
+ function getPointData(tel) {
+  const d = $.Deferred()
+  d.resolve()
+  return d.promise()
+}
+
+/*
+ * ポイント情報全体処理
+ */
 function appendDOM() {
   if (tempPointMessage) {
     ui.tempPointMessage.append(tempPointMessage)
