@@ -58,16 +58,20 @@ const ui = {
   regPointMessage: $("#reg-point-message"), 
   commonMessage: $("#common-message"),
 }
-const isMember = false
+const isMember = true
 const defaultTel = '08011111111'
 let memberList = []
 let tempPointList = []
+let tempPointListAll = []
 let tempPointMessage = ''
 let regPointList = []
+let regPointListAll = []
 let regPointMessage = ''
-let allPointList = []
 let commonMessage = ''
 
+/* 
+ *  TODO: プルダウン選択で選択した会員のポイント情報のみ表示
+ */
 
 /*
  * 呼び出し元
@@ -87,15 +91,17 @@ function pointSectionTask() {
   if (isMember) {
     getMemberList().done(function() {
       let task = []
-      memberList.some((m, i) => {
+      memberList.forEach((m, i) => {
         const dp = getPointData(m.tel)
         task.push(dp)
       })
       // FIXME: Promise.all きいてへん
       Promise.all(task).then(function() {
+
         d.resolve()
       }, function() {
         // ポイント情報取得失敗したときの処理
+        ui.memberList.hide()
         d.resolve()
       })
     }).fail(function() {
@@ -114,7 +120,7 @@ function pointSectionTask() {
  * グループ情報取得処理
  * @return Promise
  */
- function getMemberList() {
+function getMemberList() {
   const d = $.Deferred()
   $.get("./members.json").done((result) =>  {
     memberList = memberList.concat(result)
@@ -131,7 +137,7 @@ function pointSectionTask() {
  * @param {String} tel
  * @return Promise
  */
- function getPointData(tel = defaultTel) {
+function getPointData(tel = defaultTel) {
   const da = $.Deferred()
   const db = $.Deferred()
   const task = []
