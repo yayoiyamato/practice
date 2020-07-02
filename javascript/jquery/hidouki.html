@@ -15,14 +15,14 @@
 <div id="temp-point-box" class="loading">
   <h2>ポイント情報（仮）</h2>
   <ul id="temp-point-list"></ul>
-  <p id="temp-point-message"></p>
+  <p id="temp-point-message">仮メッセージ：</p>
 </div>
 <div id="reg-point-box" class="loading">
   <h2>ポイント情報（本）</h2>
   <ul id="reg-point-list"></ul>
-  <p id="reg-point-message"></p>
+  <p id="reg-point-message">本メッセージ：</p>
 </div>
-<p id="common-message"></p>
+<p id="common-message">共通：</p>
    
 </body>
 
@@ -38,9 +38,16 @@ const ui = {
   regPointMessage: $("#reg-point-message"), 
   commonMessage: $("#common-message"),
 }
+const tempPointList = []
+const tempPointMessage = ''
+const regPointList = []
+const regPointMessage = ''
+const allPointList = []
+const commonMessage = ''
 
 
 pointSectionTask().done(function() {
+  appendDOM()
   ui.tempPointBox.removeClass('loading')
   ui.regPointBox.removeClass('loading')
 })
@@ -49,6 +56,26 @@ function pointSectionTask() {
   const d = $.Deferred()
   d.resolve()
   return d.promise()
+}
+
+function appendDOM() {
+  if (tempPointMessage) {
+    ui.tempPointMessage.append(tempPointMessage)
+  } else if (tempPointList) {
+    tempPointList.forEach((e) => {
+      ui.tempPointList.append(`<li>date:${e.date}　type:${e.type}　point:${e.point}　tel:${e.tel}</li>`)
+    })
+  }
+  if (regPointMessage) {
+    ui.regPointMessage.append(regPointMessage)
+  } else if (regPointList) {
+    regPointList.forEach((e) => {
+      ui.regPointList.append(`<li>date:${e.date}　type:${e.type}　point:${e.point}　tel:${e.tel}</li>`)
+    })
+  }
+  if (commonMessage) {
+    ui.commonMessage.append(commonMessage)
+  }
 }
 
 
