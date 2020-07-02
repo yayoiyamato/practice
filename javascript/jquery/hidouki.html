@@ -38,14 +38,14 @@ const ui = {
   regPointMessage: $("#reg-point-message"), 
   commonMessage: $("#common-message"),
 }
-const isMember = false
-const memberList = []
+const isMember = true
+let memberList = []
 const tempPointList = []
-const tempPointMessage = ''
+let tempPointMessage = ''
 const regPointList = []
-const regPointMessage = ''
+let regPointMessage = ''
 const allPointList = []
-const commonMessage = ''
+let commonMessage = ''
 
 
 /*
@@ -65,6 +65,7 @@ function pointSectionTask() {
   const d = $.Deferred()
   if (isMember) {
     getMemberList().done(function() {
+      console.log(memberList)
       d.resolve()
     })
   } else {
@@ -81,7 +82,13 @@ function pointSectionTask() {
  */
  function getMemberList() {
   const d = $.Deferred()
-  d.resolve()
+  $.get("./members.json").done((result) =>  {
+    memberList = memberList.concat(result)
+    d.resolve()
+  }).fail(function() {
+    commonMessage = 'グループ情報取得に失敗しました。全件表示できません。'
+    d.resolve()
+  })
   return d.promise()
 }
 
@@ -97,7 +104,7 @@ function pointSectionTask() {
 }
 
 /*
- * ポイント情報全体処理
+ * HTML表示処理
  */
 function appendDOM() {
   if (tempPointMessage) {
