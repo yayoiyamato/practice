@@ -6,12 +6,31 @@
    <title>非同期の練習</title>
 </head>
 <style>
+  #temp-point-box,
+  #reg-point-box {
+    border: solid 1px #ddd;
+    padding: 20px;
+    margin: 20px 0;
+  }
   .loading {
     background-color: pink;
+  }
+  ul {
+    padding: 0;
+  }
+  li {
+    list-style: none;
+  }
+  li:before {
+    content: '☺︎';
+    padding-right: 10px;
   }
 </style>
 <body>
 <h1>非同期の練習</h1>
+<select id="member-list">
+  <option value="all">全件表示</option>
+</select>
 <div id="temp-point-box" class="loading">
   <h2>ポイント情報（仮）</h2>
   <ul id="temp-point-list"></ul>
@@ -30,6 +49,7 @@
 
 <script>
 const ui = {
+  memberList: $("#member-list"), 
   tempPointBox: $("#temp-point-box"), 
   tempPointList: $("#temp-point-list"), 
   tempPointMessage: $("#temp-point-message"), 
@@ -38,7 +58,7 @@ const ui = {
   regPointMessage: $("#reg-point-message"), 
   commonMessage: $("#common-message"),
 }
-const isMember = true
+const isMember = false
 const defaultTel = '08011111111'
 let memberList = []
 let tempPointList = []
@@ -145,6 +165,13 @@ function pointSectionTask() {
  * HTML表示処理
  */
 function appendDOM() {
+  if (memberList.length) {
+    memberList.forEach((e) => {
+      ui.memberList.append(`<option value="${e.tel}">${e.tel}</option>`)
+    })
+  } else {
+    ui.memberList.hide()
+  }
   if (tempPointMessage) {
     ui.tempPointMessage.append(tempPointMessage)
   } else if (tempPointList) {
