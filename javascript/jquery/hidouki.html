@@ -76,44 +76,23 @@ let commonMessage = ''
 /*
  * 呼び出し元
  */
-pointSectionTask().done(function() {
-  appendDOM()
-  ui.tempPointBox.removeClass('loading')
-  ui.regPointBox.removeClass('loading')
-})
-
-/*
- * ポイント情報全体処理
- * @return Promise
- */
-function pointSectionTask() {
-  const d = $.Deferred()
-  if (isMember) {
-    getMemberList().done(function() {
-      let task = []
-      memberList.forEach((m, i) => {
-        const dp = getPointData(m.tel)
-        task.push(dp)
-      })
-      // FIXME: Promise.all きいてへん
-      Promise.all(task).then(function() {
-
-        d.resolve()
-      }, function() {
-        // ポイント情報取得失敗したときの処理
-        ui.memberList.hide()
-        d.resolve()
-      })
-    }).fail(function() {
-      console.log("fail")
+if (isMember) {
+  getMemberList().then(function() {
+    $.when.apply(null, [getTempPoint(memberList), getRegPoint(memberList)]).done(function(tempErr, regErr) {
+      if(tempErr || regErr) {
+        commonMessage = ''
+      }
+      appendDOM()
+      ui.tempPointBox.removeClass('loading')
+      ui.regPointBox.removeClass('loading')
     })
-  } else {
-    $.when.apply(null, getPointData()).always(function() {
-      console.log(tempPointList, regPointList)
-      d.resolve()
-    })
-  }
-  return d.promise()
+  })
+} else {
+  $.when.apply(null, [getTempPoint(), getRegPoint()]).then(function() {
+    appendDOM()
+    ui.tempPointBox.removeClass('loading')
+    ui.regPointBox.removeClass('loading')
+  })
 }
 
 /*
@@ -133,39 +112,89 @@ function getMemberList() {
 }
 
 /*
- * ポイント情報取得処理
- * @param {String} tel
+ * ポイント情報（仮）取得処理
+ * @param {Array} memberList
  * @return Promise
  */
-function getPointData(tel = defaultTel) {
-  const da = $.Deferred()
-  const db = $.Deferred()
-  const task = []
-
-  $.get("./pointsA.json").done(function(result) {
-    tempPointList = tempPointList.concat(result.filter(
-      (e) => e.tel === tel)
-    )
-    da.resolve()
-  }).fail(function() {
-    tempPointMessage = 'ERROR：ポイント情報（仮）の取得に失敗しました。'
-    da.reject()
+ function getTempPoint(memberList) {
+  const d = $.Deferred()
+  const tasks = []
+  let isErr = ''
+  if(!memberList) {
+    memberList = [{
+      "name": "yai",
+      "tel": defaultTel
+    }]
+  }
+  memberList.forEach((member) => {
+    const task = $.Deferred()
+    $.get("./temp-points.json").done((result) =>  {
+      result.forEach((data) => {
+        if (data.tel === member.tel) {
+          tempPointList.push({...data, name: member.name})
+        }
+      })
+      task.resolve()
+    }).fail(function() {
+      isErr = true
+      task.resolve()
+    })
+    tasks.push(task.promise())
   })
-  task.push(da.promise())
-
-  $.get("./pointsB.json").done(function(result) {
-    regPointList = regPointList.concat(result.filter(
-      (e) => e.tel === tel)
-    )
-    db.resolve()
-  }).fail(function() {
-    regPointMessage = 'ERROR：ポイント情報（本）の取得に失敗しました。'
-    db.reject()
+  $.when.apply(null, tasks).done(function() {
+    if(isErr) {
+      tempPointMessage = "ERROR：ポイント情報（仮）の取得に失敗しました。"
+      d.resolve('E')
+    } else if (!tempPointList.length) {
+      tempPointMessage = "ポイント情報（仮）はありません。"
+    }
+    d.resolve()
+    return d.promise()
   })
-  task.push(db.promise())
+ }
 
-  return task
-}
+/*
+ * ポイント情報（本）取得処理
+ * @param {Array} memberList
+ * @return Promise
+ */
+ function getRegPoint(memberList) {
+  const d = $.Deferred()
+  const tasks = []
+  const isErr = ''
+  if(!memberList) {
+    memberList = [{
+      "name": "yai",
+      "tel": defaultTel
+    }]
+  }
+  memberList.forEach((member) => {
+    const task = $.Deferred()
+    const data = []
+    $.get("./reg-points.json").done((result) =>  {
+      result.forEach((data) => {
+        if (data.tel === member.tel) {
+          regPointList.push({...data, name: member.name})
+        }
+      })
+      task.resolve()
+    }).fail(function() {
+      isErr = true
+      task.resolve()
+    })
+    tasks.push(task.promise())
+  })
+  $.when.apply(null, tasks).done(function() {
+    if(isErr) {
+      regPointMessage = "ERROR：ポイント情報（本）の取得に失敗しました。"
+      d.resolve('E')
+    } else if (!regPointList.length) {
+      regPointMessage = "ポイント情報（本）はありません。"
+    }
+    d.resolve()
+  })
+  return d.promise()
+ }
 
 /*
  * HTML表示処理
@@ -182,14 +211,14 @@ function appendDOM() {
     ui.tempPointMessage.append(tempPointMessage)
   } else if (tempPointList) {
     tempPointList.forEach((e) => {
-      ui.tempPointList.append(`<li>date:${e.date}　type:${e.type}　point:${e.point}　tel:${e.tel}</li>`)
+      ui.tempPointList.append(`<li>date:${e.date}　type:${e.type}　point:${e.point}　tel:${e.tel}　name:${e.name}</li>`)
     })
   }
   if (regPointMessage) {
     ui.regPointMessage.append(regPointMessage)
   } else if (regPointList) {
     regPointList.forEach((e) => {
-      ui.regPointList.append(`<li>date:${e.date}　type:${e.type}　point:${e.point}　tel:${e.tel}</li>`)
+      ui.regPointList.append(`<li>date:${e.date}　type:${e.type}　point:${e.point}　tel:${e.tel}　name:${e.name}</li>`)
     })
   }
   if (commonMessage) {
