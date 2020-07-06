@@ -78,10 +78,10 @@ let commonMessage = ''
  */
 if (isMember) {
   getMemberList().then(function() {
-    $.when.apply(null, [getTempPoint(memberList), getRegPoint(memberList)]).done(function(tempErr, regErr) {
-      if(tempErr || regErr) {
-        commonMessage = ''
-      }
+    $.when.apply(null, [getTempPoint(memberList), getRegPoint(memberList)]).fail(function() {
+      commonMessage = ''
+      ui.memberList.hide()
+    }).always(function() {
       appendDOM()
       ui.tempPointBox.removeClass('loading')
       ui.regPointBox.removeClass('loading')
@@ -144,14 +144,14 @@ function getMemberList() {
   $.when.apply(null, tasks).done(function() {
     if(isErr) {
       tempPointMessage = "ERROR：ポイント情報（仮）の取得に失敗しました。"
-      d.resolve('E')
+      d.reject()
     } else if (!tempPointList.length) {
       tempPointMessage = "ポイント情報（仮）はありません。"
     }
     d.resolve()
     return d.promise()
   })
- }
+}
 
 /*
  * ポイント情報（本）取得処理
@@ -161,7 +161,7 @@ function getMemberList() {
  function getRegPoint(memberList) {
   const d = $.Deferred()
   const tasks = []
-  const isErr = ''
+  let isErr = ''
   if(!memberList) {
     memberList = [{
       "name": "yai",
@@ -187,7 +187,7 @@ function getMemberList() {
   $.when.apply(null, tasks).done(function() {
     if(isErr) {
       regPointMessage = "ERROR：ポイント情報（本）の取得に失敗しました。"
-      d.resolve('E')
+      d.reject()
     } else if (!regPointList.length) {
       regPointMessage = "ポイント情報（本）はありません。"
     }
