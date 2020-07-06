@@ -126,6 +126,7 @@ function getMemberList() {
       "tel": defaultTel
     }]
   }
+  // TODO: chunk使って回数制限する
   memberList.forEach((member) => {
     const task = $.Deferred()
     $.get("./temp-points.json").done((result) =>  {
