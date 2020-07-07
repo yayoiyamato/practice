@@ -102,7 +102,9 @@ if (isMember) {
 function getMemberList() {
   const d = $.Deferred()
   $.get("./members.json").done((result) =>  {
-    memberList = memberList.concat(result)
+    for(let i = 0; i < result.length; i += 2) {
+      memberList.push(result.slice(i, 2));
+    }
     d.resolve()
   }).fail(function() {
     commonMessage = 'グループ情報取得に失敗しました。全件表示できません。'
