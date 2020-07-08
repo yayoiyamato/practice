@@ -18,7 +18,7 @@ const MemberView = Backbone.Marionette.ItemView.extend({
     serializeData: function() {
         let res = this.model.toJSON()
         res.name = 'yyi'
-        res.type = 'girl'
+        res.age = 19
         return res
     },
 
@@ -39,10 +39,9 @@ const MemberView = Backbone.Marionette.ItemView.extend({
     },
     // renderで実行される
     onRender: function() {
-        let res = this.model.toJSON()
         console.log('MemberViewのonRenderを実行')
-        console.log(res.name)
-        console.log(this.model.get('type'))
+        // serealizeDataでセットした値はtemplateの中でしか使えない？謎
+        console.log(this.model.get('age'))
     }
 });
 
@@ -61,9 +60,9 @@ const MembersView = Backbone.Marionette.CollectionView.extend({
     },
     // renderで実行される
     onRender: () => {
-        const template = this.template(this.model.toJSON());
-        this.$el.html(template);
-        return this;
+        // const template = this.template(this.model.toJSON());
+        // this.$el.html(template);
+        // return this;
     }
 });
 
