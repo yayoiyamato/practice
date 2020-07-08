@@ -15,20 +15,34 @@ const MemberView = Backbone.Marionette.ItemView.extend({
     initialize: () => {
         console.log('MemberViewのinitializeを実行')
     },
+    serializeData: function() {
+        let res = this.model.toJSON()
+        res.name = 'yyi'
+        res.type = 'girl'
+        return res
+    },
+
     ui: {
         members: '#members' 
     },
     onBeforeShow: () => {
         console.log('MemberViewのonBeforeShowを実行')
+        console.log(this.model.get('name'))
+        console.log(this.model.get('type'))
     },
     // RegionでshowされたViewに対して発生
     // 呼ばれるタイミングは、レンダリングされて画面に表示された後
     onShow: () => {
         console.log('MemberViewのonShowを実行')
+        console.log(this.model.get('name'))
+        console.log(this.model.get('type'))
     },
     // renderで実行される
-    onRender: () => {
+    onRender: function() {
+        let res = this.model.toJSON()
         console.log('MemberViewのonRenderを実行')
+        console.log(res.name)
+        console.log(this.model.get('type'))
     }
 });
 
