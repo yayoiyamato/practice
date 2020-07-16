@@ -8,14 +8,18 @@
         body {
             background: white;  
         }
-        .text {
+        .box01 {
+            position: relative;
+            margin: 0 auto 20px;
+        }
+        .box01 .text {
             width: auto;
             padding: 20px;
             display: inline-block;
             background-color: black;
             color: white;
         }
-        .blend {
+        .box01 .blend {
             width: 30px;
             height: 30px;
             background-color: white;
@@ -25,10 +29,35 @@
             left: 25px;
             mix-blend-mode: difference;
         }
+        .box02 {
+            position: relative;
+            margin: 0 auto 20px;
+            padding-left: 65px;
+        }
+        .box02 .text {
+            position: absolute;
+            left: 0;
+            bottom: 20px;
+            color: black;
+        }
+        .box02 .text:after {
+            width: 100%;
+            content: attr(text);
+            position: absolute;
+            left: 0;
+            color: white;
+            mix-blend-mode: difference;
+        }
     </style>
 </head>
 <body>
-    <div class="text">色を反転させたい</div>
-    <div class="blend"></div>
+    <div class="box01">
+        <div class="text">色を反転させたい</div>
+        <div class="blend"></div>
+    </div>
+    <div class="box02">
+        <img src="./rememberme.jpg" width="400" alt="">
+        <div text="画像の上だけ色を反転させたい" class="text">画像の上だけ色を反転させたい</div>
+    </div>
 </body>
 </html>
