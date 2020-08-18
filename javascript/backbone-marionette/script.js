@@ -28,7 +28,11 @@ var MyModel = Backbone.Model.extend({
   },
   // default値を設定する
   defaults: {
-    value: 'default value'
+    value: 'default value',
+    favorite: {
+      food: 'gohan',
+      character: 'mike'
+    }
   },
   method: function() {
     console.log('method')
@@ -54,6 +58,24 @@ console.log(constructorModel.has('method')) // false
 constructorModel.unset('name')
 console.log(constructorModel.get('name')) // undefined
 
+// 元のインスタンスが持つ attributes のコピーを取得する
+var copy = myModel.toJSON()
+console.log(copy.favorite) // {food: "gohan", character: "mike"}
+copy.favorite.character = 'migel'
+console.log(myModel.get('favorite')) // {food: "gohan", character: "migel"}
 
 /* ----------------------------------------- */
 
+/* 
+ * View
+ */
+
+$(function() {
+  var MyView = Backbone.View.extend();
+
+  var myView = new MyView();
+
+  myView.$el
+        .text('DOM追加！')
+        .appendTo('body');
+});
