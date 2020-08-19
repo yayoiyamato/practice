@@ -1,18 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="lib/jquery.js"></script>
-    <script src="lib/underscore.js"></script>
-    <script src="lib/underscore.js"></script>
-    <script src="lib/backbone.js"></script>
-    <script src="lib/backbone.js"></script>
-    <script src="lib/backbone.marionette.js"></script>
-    <script src="tab.js"></script>
-    <title>Tabの練習</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.6/dist/css/uikit.min.css" />
+  <script src="lib/underscore.js"></script>
+  <script src="lib/underscore.js"></script>
+  <script src="lib/backbone.js"></script>
+  <script src="lib/backbone.js"></script>
+  <script src="lib/backbone.marionette.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.6/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.6/dist/js/uikit-icons.min.js"></script>    <script src="lib/jquery.js"></script>
+  <script src="tab.js"></script>
+  <title>Tabの練習</title>
+  <style>
+    .tab-container {
+      padding: 20px;
+    }
+  </style>
 </head>
 <body>
+  <div class="tab-container">
+    <ul uk-tab class="tab">
+      <li><a href="">Tab 1</a></li>
+      <li><a href="">Tab 2</a></li>
+      <li><a href="">Tab 3</a></li>
+    </ul>
+    <ul class="uk-switcher tab-content">
+      <li>Tab Content 1</li>
+      <li>Tab Content 2</li>
+      <li>Tab Content 3</li>
+    </ul>
+  </div>
     
 </body>
 </html>
