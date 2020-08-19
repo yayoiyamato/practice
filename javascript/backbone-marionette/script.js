@@ -76,6 +76,6 @@ $(function() {
   var myView = new MyView();
 
   myView.$el
-        .text('DOM追加！')
-        .appendTo('body');
+    .text('DOM追加！')
+    .appendTo('body');
 });
