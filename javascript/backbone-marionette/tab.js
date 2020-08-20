@@ -1,29 +1,32 @@
+/*　global define */
 
 define([
   'backbone',
-  'marionette',
-  'underscore'
+  'backbone.marionette',
+  'underscore',
 ],
 function (
   Backbone,
   Marionette,
-  _
+  _,
 ) {
 
-  // FIXME: Uncaught Error: Mismatched anonymous define() module
-  
   'use strict'
-
-  var TestItemView = Marionette.ItemVIew.extends({
-    template: 'aaa'
+  
+  var TestItemView = Marionette.View.extend({
+    template: '<p>test</p>'
   })
 
-  return Marionette.LayoutView.extend({
+  return Marionette.View.extend({
     regions: {
       test: '.test'
     },
+    initialize: function() {
+      console.log('initialize')
+      this.render()
+    },
     onBeforeShow: function() {
-      console.log('ok')
+      console.log('onBeforeShow')
       this.test.show(new TestItemView())
     }
   })
