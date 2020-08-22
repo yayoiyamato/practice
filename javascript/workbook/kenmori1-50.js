@@ -9,15 +9,12 @@ const c = { ...a, ...b}
 console.log(c) // { a:'a', b:'b' }
 
 
-/* Q2
+/* Q2 ×
  * const arry = ['aa','bb','cc','dd','ee','ff','gg']; のdd,ee,ffを新たな配列として返してください
  */
 const arry = ['aa','bb','cc','dd','ee','ff','gg']
 const newArry = arry.slice(3, 6)
 console.log(newArry) // [ 'dd', 'ee', 'ff' ]
-
-// やいの解答：×
-// const newArry = [arry[4], arry[5], arry[6]]
 
 
 /* Q3
@@ -35,10 +32,33 @@ q4.forEach((e, i) => console.log(e + i)) // a0 b1
 
 
 /* Q5
- * 任意の変数名の[1,2]を定義して配列かどうかを評価してください e.g trues
+ * 任意の変数名の[1,2]を定義して配列かどうかを評価してください e.g true
  */
 const q5 = [1,2]
 console.log(Array.isArray(q5))
 
 // object instanceof constructor 継承しているオブジェクトのインスタンス比較
 // console.log(q5 instanceof Array)でも true になる
+
+
+/* Q6 ×
+ * 変数xが定義されていない場合上の下記は実行されますか?
+ *
+ * if (typeof x === 'undefined') {
+ *  ???
+ * } 
+ *
+ * if (x === undefined) {
+ *  ???
+ * } 
+ */
+
+if (typeof x === 'undefined') {
+    // 実行される
+} 
+if (x === undefined) {
+    // 実行されない(ReferenceError)
+} 
+
+// typeofは変数が存在しない場合エラーは投げない
+// しかしこのような値の存在チェックは避けるべき
