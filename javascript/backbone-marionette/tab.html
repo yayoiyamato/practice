@@ -1,33 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.6/dist/css/uikit.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.6/dist/js/uikit.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.6/dist/js/uikit-icons.min.js"></script>
-  <title>Tabの練習</title>
-  <style>
-    .tab-container {
-      padding: 20px;
-    }
-  </style>
-</head>
-<body>
-  <div class="test"></div>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Backbone.Marionette - Tab</title>
 
-  <!-- <div class="tab-container">
-    <ul uk-tab class="tab">
-      <li><a href="">Tab 1</a></li>
-      <li><a href="">Tab 2</a></li>
-      <li><a href="">Tab 3</a></li>
-    </ul>
-    <ul class="uk-switcher tab-content">
-      <li>Tab Content 1</li>
-      <li>Tab Content 2</li>
-      <li>Tab Content 3</li>
-    </ul>
-  </div> -->
-  <script data-main="tab" src="require.js"></script>    
-</body>
+		<script type="text/javascript" src="lib/jquery.js"></script>
+		<script type="text/javascript" src="lib/underscore.js"></script>
+		<script type="text/javascript" src="lib/backbone.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/2.4.7/backbone.marionette.min.js" integrity="sha512-dWPstdotJOdg873IhRbxCZwDlRSWAStptzvC5hD6N9tdwAJlK9v7moUmx3PllDEmWM9bjfK7drIFkor/0kqqwA==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.27.5/css/uikit.min.css" integrity="sha512-b/j0MsmsRINkL4YUIZWvtf9tQr4KYQt2ld3NjEdakM7QRRWLenfe9OmG5K9GjNW56hE0QJCwWMv11fAVFELR2w==" crossorigin="anonymous" /><script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.27.5/js/uikit.min.js" integrity="sha512-KI08ZutCgdasDMwp5rPKd9nF8r+eAy/bZH3Rjova6HfkDv1W7J72sNW+K++KvMp3HL7z0cCykV9vixJACHeCew==" crossorigin="anonymous"></script>
+
+    <style>
+      body {
+        padding: 20px;
+      }
+      .uk-switcher li {
+        padding: 15px;
+      }
+    </style>
+
+  </head>
+	<body>
+    <div class="tab-container"></div>
+    <div class="tab-content-container"></div>
+
+		<script type="text/javascript" src="tab.js"></script>
+	</body>
 </html>

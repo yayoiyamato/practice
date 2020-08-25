@@ -1,33 +1,78 @@
-/*　global define */
+// Setup application
+var App = new Backbone.Marionette.Application({
+	template: function(selector) {
+		return function(data) {
+			return _.template($(selector).html(), data);
+		};
+	}
+});
 
-define([
-  'backbone',
-  'backbone.marionette',
-  'underscore',
-],
-function (
-  Backbone,
-  Marionette,
-  _,
-) {
+App.addRegions({
+	tabContainer: '.tab-container',
+	tabContentContainer: '.tab-content-container'
+});
 
-  'use strict'
-  
-  var TestItemView = Marionette.View.extend({
-    template: '<p>test</p>'
-  })
+/* Tab モデル */
+var TabModel = Backbone.Model.extend({
+	defaults: {
+    tabName: 'tabName',
+    isA: true,
+    isB: true
+	}
+})
 
-  return Marionette.View.extend({
-    regions: {
-      test: '.test'
+/* Tab コレクション */
+var TabCollection = Backbone.Collection.extend({ model: TabModel})
+
+/* Tab ボタンのアイテムビュー */
+var TabItemView = Backbone.Marionette.ItemView.extend({
+  tagName: 'li',
+	template: _.template('<a href=""><%= tabName %></a>')
+})
+
+/* Tab ボタンのコレクションビュー */
+var TabCollectionView = Backbone.Marionette.CollectionView.extend({
+  tagName: 'ul',
+  className: 'uk-tab tab',
+  attributes: {
+    'data-uk-tab': "{connect:'.tab-content'}"
+  },
+  childView: TabItemView
+})
+
+/* Tab コンテンツのアイテムビュー */
+var TabContentItemView = Backbone.Marionette.ItemView.extend({
+  tagName: 'li',
+	template: _.template('<%= tabName %> の中身')
+})
+
+/* Tab コンテンツのコレクションビュー */
+var TabContentCollectionView = Backbone.Marionette.CollectionView.extend({
+  tagName: 'ul',
+  className: 'uk-switcher tab-content',
+  childView: TabContentItemView
+})
+
+App.on("start", function() {
+ 
+  var tabs = [
+    {
+      tabName: 'tabName1',
+      isA: true,
+      isB: true
     },
-    initialize: function() {
-      console.log('initialize')
-      this.render()
+    {
+      tabName: 'tabName2',
+      isA: false,
+      isB: true
     },
-    onBeforeShow: function() {
-      console.log('onBeforeShow')
-      this.test.show(new TestItemView())
-    }
-  })
+  ]
+  var tabCollection = new TabCollection(tabs)
+
+  App.tabContainer.show(new TabCollectionView({ collection: tabCollection }))
+	App.tabContentContainer.show(new TabContentCollectionView({ collection: tabCollection }))
+})
+
+$(function() {
+	App.start()
 })
