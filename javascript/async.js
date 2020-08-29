@@ -41,3 +41,9 @@ async function asyncSample(arg) {
 }
 
 asyncSample('xxx') // done!
+
+asyncSample() 
+// fail!
+// UnhandledPromiseRejectionWarning: Error: fail!
+// UnhandledPromiseRejectionWarning: Unhandled promise rejection. ...
+// DeprecationWarning: Unhandled promise rejections are deprecated. ...
