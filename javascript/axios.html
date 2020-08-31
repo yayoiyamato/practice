@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>  
+  </head>
+<body>
+  <script>
+    /*
+     * axios の練習
+     *
+     * axios：ブラウザやnode.js上で動くPromiseベースのHTTPクライアント
+     * 非同期にHTTP通信を行いたいときに使う
+     * 
+     * ◆ GET通信
+     * axios.get(第一引数：パラメータ付きのURL)
+     */
+     axios.get('./list.json')
+      .then(function (response) {
+        // 取得成功した時の処理
+        console.log(response.data); // (2) [{name: "migel", age: 6}, {name: "coco", age: 120}]
+        console.log(response.status); // 200
+        console.log(response.statusText); // OK
+        console.log(response.header); // undefined
+        console.log(response.config); // {url: "./list.json", method: "get", headers: {…}, transformRequest: Array(1), transformResponse: Array(1), …}
+      })
+      .catch(function (error) {
+        // 取得失敗した時の処理
+        console.log(error);
+      })
+      .finally(function (response) {
+        // 成功時・失敗時両方実行される処理
+        console.log(response); // undefined
+      });
+
+  </script>
+</body>
+</html>
