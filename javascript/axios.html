@@ -17,7 +17,7 @@
      * ◆ GET通信
      * axios.get(第一引数：パラメータ付きのURL)
      */
-     axios.get('./list.json')
+     axios.get('./lists.json')
       .then(function (response) {
         // 取得成功した時の処理
         console.log(response.data); // (2) [{name: "migel", age: 6}, {name: "coco", age: 120}]
@@ -27,8 +27,8 @@
         console.log(response.config); // {url: "./list.json", method: "get", headers: {…}, transformRequest: Array(1), transformResponse: Array(1), …}
       })
       .catch(function (error) {
-        // 取得失敗した時の処理
-        console.log(`error: ${error}`);
+        // 取得失敗した時の処理（リクエスト結果が 404,500とか、何らかのエラーになった場合）
+        console.log(error); // Error: Request failed with status code 404
       })
       .finally(function (response) {
         // 成功時・失敗時両方実行される処理
