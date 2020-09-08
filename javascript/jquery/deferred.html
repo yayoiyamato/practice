@@ -73,6 +73,28 @@ testFunc().then(
   }
 )
 
+
+// ためし ----------------------------------------------
+
+const flg = false
+function test() {
+  if (flg) {
+    // ifの外で定義したらflgがfalseのとき解決しないから×
+    const dfd = $.Deferred()
+    $.when($.get("./monsters.json")).done((monsters) => {
+      dfd.resolve(monsters)
+    })
+    return dfd.promise()
+  }
+}
+
+$.when(test()).done((result) => {
+  if(result) {
+    console.log(result)
+  } else {
+    console.log('flgがfalseです')
+  }
+})
 </script>
 
 </html>
