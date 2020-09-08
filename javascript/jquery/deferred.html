@@ -76,13 +76,14 @@ testFunc().then(
 
 // ためし ----------------------------------------------
 
-const flg = false
+const flg = true
 function test() {
   if (flg) {
     // ifの外で定義したらflgがfalseのとき解決しないから×
     const dfd = $.Deferred()
-    $.when($.get("./monsters.json")).done((monsters) => {
-      dfd.resolve(monsters)
+    $.when($.get("./monsters.json"), $.get("./animals.json")).done((monsters, animals) => {
+      dfd.resolve([monsters, animals]) // 0: (3) [Array(3), "success", {…}]  1: (3) [Array(3), "success", {…}]
+      dfd.resolve({ monsters: monsters, animals: animals }) // {monsters: Array(3), animals: Array(3)}
     })
     return dfd.promise()
   }
