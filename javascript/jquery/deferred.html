@@ -102,32 +102,52 @@
 
     // ためし ----------------------------------------------
 
-    var arr = ["a", "b", "c", "d"];
-    var d = new $.Deferred();
-    d.resolve(arr);
-    for (var i = 0; i < arr.length; i++) {
-      d = d.then(function (arr) {
-        var d = new $.Deferred();
-        setTimeout(
-          function (arr) {
-            console.log(arr.shift());
-            d.resolve(arr);
-          }.bind(null, arr),
-          arr.length * 1000
-        );
-        return d.promise();
-      });
-    }
-    // function task(callback) {
-    //   for (let i = 0; i < list.length; i++) {
-    //       callback(list[i]);
+    const list = ['aaa', 'bbb', 'ccc']
+    // new Promise((res) => {
+    //   function loop(i) {
+    //     return new Promise((resolve) => {
+    //       setTimeout(() => {
+    //         console.log(i)
+    //         resolve(i + 1)
+    //       }, 3000)
+    //     }).then((count) => {
+    //       if (count >= list.length) {
+    //         res()
+    //       } else {
+    //         loop(count)
+    //       }
+    //     })
     //   }
-    // }
+    //   loop(0)
+    // }).then(function() {
+    //   console.log('Fin!')
+    // })
 
-    // task(function (parm) {
-    //   setTimeout(function () {
-    //       console.log(parm);
-    //   }, 5000);
-    // });
+    function tasks() {
+      const dfd = $.Deferred()
+      function task(i) {
+        function loop() {
+          const d = $.Deferred()
+          setTimeout(() => {
+            console.log(i)
+            d.resolve(i + 1)
+          }, 2000)
+          return d.promise()
+        }
+        loop().then((count) => {
+          if (count >= list.length) {
+            dfd.resolve()
+          } else {
+            task(count)
+          }
+        })
+      }
+      task(0)
+      return dfd.promise()
+    }
+    tasks().then(() => {
+      console.log('Fin!')
+    })
+
   </script>
 </html>
