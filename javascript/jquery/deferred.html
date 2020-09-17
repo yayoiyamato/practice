@@ -123,10 +123,10 @@
     //   console.log('Fin!')
     // })
 
-    function tasks() {
+    const tasks = function() {
       const dfd = $.Deferred()
-      function task(i) {
-        function loop() {
+      const loop = function(i) {
+        const task = function() {
           const d = $.Deferred()
           setTimeout(() => {
             console.log(i)
@@ -134,18 +134,18 @@
           }, 2000)
           return d.promise()
         }
-        loop().then((count) => {
+        $.when(task()).done((count) => {
           if (count >= list.length) {
             dfd.resolve()
           } else {
-            task(count)
+            loop(count)
           }
         })
       }
-      task(0)
+      loop(0)
       return dfd.promise()
     }
-    tasks().then(() => {
+    $.when(tasks()).done(() => {
       console.log('Fin!')
     })
 
