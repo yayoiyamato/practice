@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>backdrop-filter</title>
+  <style>
+    .bg {
+      min-height: 300px;
+      padding: 100px 0 0;
+      background: black;
+      background-image: url("./heart.png");
+      background-repeat: repeat;
+    }
+    .blur {
+      color: #fff;
+      padding: 100px;
+      margin: 0 auto;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      background-color: rgba(255, 255, 255, .1); /* 背景色つけたいときは透過させる */
+    }
+  </style>
+</head>
+<body>
+  <div class="bg">
+    <div class="blur">
+      文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字<br>
+      文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字
+      <!-- <img src="./monster.jpg" alt=""> -->
+    </div>
+  </div>
+</body>
+</html>
