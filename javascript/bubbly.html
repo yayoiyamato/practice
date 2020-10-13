@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubbly-bg</title>
+</head>
+<body>
+    <div>
+      コンテンツ<br>
+      コンテンツ<br>
+      コンテンツ<br>
+      コンテンツ<br>
+      コンテンツ<br>
+      コンテンツ
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
+    <script>
+      bubbly({
+        bubbles: 15, // 数
+        radiusFunc: () => 20 + Math.random() * 50, // 大きさ
+        angleFunc: () => - Math.PI / 2, // 向き
+        velocityFunc: () => Math.random() * 1.5, // 速さ 
+        colorStart: "#ffffff", // 背景色（開始）
+        colorStop: "#ffffff", // 背景色（終了）
+        compose: "source-over", // 合成方法
+        bubbleFunc:() => `hsla(${194 + Math.random() * 25}, 11%, 85%, .5)`, // 色彩(hsla)
+      });
+    </script>
+</body>
+</html>
