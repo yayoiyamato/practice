@@ -42,7 +42,7 @@ console.log(Array.isArray(q5))
 
 
 /* Q6 ×
- * 変数xが定義されていない場合上の下記は実行されますか?
+ * 変数xが定義されていない場合下記は実行されますか?
  *
  * if (typeof x === 'undefined') {
  *  ???

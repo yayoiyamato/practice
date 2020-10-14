@@ -124,7 +124,7 @@
     // })
 
     const tasks = function() {
-      const dfd = $.Deferred()
+      const ds = $.Deferred()
       const loop = function(i) {
         const task = function() {
           const d = $.Deferred()
@@ -136,14 +136,14 @@
         }
         $.when(task()).done((count) => {
           if (count >= list.length) {
-            dfd.resolve()
+            ds.resolve()
           } else {
             loop(count)
           }
         })
       }
       loop(0)
-      return dfd.promise()
+      return ds.promise()
     }
     $.when(tasks()).done(() => {
       console.log('Fin!')
